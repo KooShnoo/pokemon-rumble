@@ -29,7 +29,7 @@ from tools.project import (
 # Game versions
 DEFAULT_VERSION = 0
 VERSIONS = [
-    "WPSE",  # 0
+    "WPSE",
 ]
 
 parser = argparse.ArgumentParser()
@@ -165,7 +165,7 @@ config.ldflags = [
     "-nodefaults",
 ]
 if args.debug:
-    config.ldflags.append("-g")  # Or -gdwarf-2 for Wii linkers
+    config.ldflags.append("-gdwarf-2")
 if args.map:
     config.ldflags.append("-mapunused")
     # config.ldflags.append("-listclosure") # For Wii linkers
@@ -198,6 +198,10 @@ cflags_base = [
     "-str reuse",
     "-enc SJIS",
     "-i include",
+    "-i libs/PowerPC_EABI_Support/include/stl",
+    "-i libs/PowerPC_EABI_Support/include/",
+    "-i libs/RVL_SDK/include/",
+    "-i libs/nw4r/include/",
     f"-i build/{config.version}/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
@@ -205,8 +209,7 @@ cflags_base = [
 
 # Debug flags
 if args.debug:
-    # Or -sym dwarf-2 for Wii compilers
-    cflags_base.extend(["-sym on", "-DDEBUG=1"])
+    cflags_base.extend(["-sym dwarf-2", "-DDEBUG=1"])
 else:
     cflags_base.append("-DNDEBUG=1")
 
@@ -215,14 +218,15 @@ cflags_runtime = [
     *cflags_base,
     "-use_lmw_stmw on",
     "-str reuse,pool,readonly",
-    "-gccinc",
     "-common off",
-    "-inline auto",
+    "-inline on",
+    "-func_align 4",
 ]
 
-# REL flags
-cflags_rel = [
+cflags_game = [
     *cflags_base,
+    "-Cpp_exceptions on",
+    # "-RTTI on",
     "-sdata 0",
     "-sdata2 0",
 ]
@@ -241,12 +245,13 @@ def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     }
 
 
-# Helper function for REL script objects
-def Rel(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
+# Helper function for game objects
+def Game(objects: List[Object]) -> Dict[str, Any]:
     return {
-        "lib": lib_name,
+        "lib": "Pokemon Rumble",
         "mw_version": "Wii/1.0",
-        "cflags": cflags_rel,
+        "src_dir": "src",
+        "cflags": cflags_game,
         "progress_category": "game",
         "objects": objects,
     }
