@@ -12,3 +12,82 @@ Sections:
 	.sbss       type:bss align:4
 	.sdata2     type:rodata align:32
 	.sbss2      type:bss align:8
+
+libs/RVL_SDK/src/revolution/gx/GXInit.c:
+	.text       start:0x802C9B50 end:0x802CACE0 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXFifo.c:
+	.text       start:0x802CACE0 end:0x802CB520 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXAttr.c:
+	.text       start:0x802CB6C0 end:0x802CC630 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXMisc.c:
+	.text       start:0x802CC630 end:0x802CCE30 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXGeometry.c:
+	.text       start:0x802CCE30 end:0x802CD480 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXFrameBuf.c:
+	.text       start:0x802CD480 end:0x802CDEC0 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXLight.c:
+	.text       start:0x802CDEC0 end:0x802CE630 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXTexture.c:
+	.text       start:0x802CE630 end:0x802CF730 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXBump.c:
+	.text       start:0x802CF730 end:0x802CFB90 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXTev.c:
+	.text       start:0x802CFB90 end:0x802D0260 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXPixel.c:
+	.text       start:0x802D0260 end:0x802D09E0 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXDisplayList.c:
+	.text       start:0x802D09E0 end:0x802D0AB0 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXTransform.c:
+	.text       start:0x802D0AB0 end:0x802D1020 align:16
+
+libs/RVL_SDK/src/revolution/gx/GXPerf.c:
+	.text       start:0x802D1020 end:0x802D1850 align:16
+
+libs/RVL_SDK/src/revolution/fs/fs.c:
+	.text       start:0x802F3430 end:0x802F4C40 align:16
+
+libs/PowerPC_EABI_Support/src/Runtime/__mem.c:
+	.init       start:0x80004364 end:0x800046E4
+	.text       start:0x8033F974 end:0x8033F990
+
+libs/PowerPC_EABI_Support/src/Runtime/NMWException.cp:
+	extab       start:0x80044150 end:0x80044188
+	extabindex  start:0x80052434 end:0x80052458
+	.text       start:0x8033FAB8 end:0x8033FFC4
+	.sdata      start:0x804B8F88 end:0x804B8F90
+
+libs/PowerPC_EABI_Support/src/Runtime/ptmf.c:
+	.text       start:0x8034003C end:0x80340094
+
+libs/PowerPC_EABI_Support/src/Runtime/MWRTTI.cp:
+	extab       start:0x80044190 end:0x800441A0
+	extabindex  start:0x80052464 end:0x8005247C
+	.text       start:0x80340094 end:0x8034033C
+	.rodata     start:0x803982C8 end:0x80398310
+	.data       start:0x803E5CF0 end:0x803E5D18
+
+libs/PowerPC_EABI_Support/src/Runtime/runtime.c:
+	.text       start:0x8034033C end:0x80340A7C
+
+libs/PowerPC_EABI_Support/src/Runtime/Gecko_ExceptionPPC.cp:
+	extab       start:0x800441A0 end:0x80044214
+	extabindex  start:0x8005247C end:0x800524D0
+	.text       start:0x80340B94 end:0x803422D4
+	.rodata     start:0x8039833C end:0x80398390
+	.data       start:0x803E5D18 end:0x803E5DB0
+	.bss        start:0x804B3078 end:0x804B31F8
+
+libs/PowerPC_EABI_Support/src/MSL_C/MSL_Common/alloc.c:
+	.text       start:0x803424E4 end:0x803430E0

@@ -105,6 +105,7 @@ class Object:
             obj.asm_path = (
                 Path(obj.options["asm_dir"]) / obj.options["source"]
             ).with_suffix(".s")
+        self.name = str(obj.options["src_dir"]) + "/" + self.name
         base_name = Path(self.name).with_suffix("")
         obj.src_obj_path = build_dir / "src" / f"{base_name}.o"
         obj.asm_obj_path = build_dir / "mod" / f"{base_name}.o"
@@ -1662,6 +1663,9 @@ def generate_compile_commands(
                 "-nostdinc",
                 "-fno-builtin",
                 "--target=powerpc-eabi",
+                "-D__attribute__(x)=",
+                "-D__declspec(x)=",
+                "-D__rlwimi(ra, rs, sh, mb, me)=0",
                 *cflags,
                 "-c",
                 obj.src_path,
