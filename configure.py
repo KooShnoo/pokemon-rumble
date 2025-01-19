@@ -29,7 +29,7 @@ from tools.project import (
 # Game versions
 DEFAULT_VERSION = 0
 VERSIONS = [
-    "WPSE",
+    "WPSE01_01", # USA version 1
 ]
 
 parser = argparse.ArgumentParser()
@@ -499,6 +499,9 @@ config.progress_categories = [
     ProgressCategory("nw4r", "NintendoWare Code"),
 ]
 config.progress_each_module = args.verbose
+
+# TODO(KooShnoo) use config.extra_clang_flags to define `__INTELLISENSE__`,
+# use config.custom_build_rules to build that cursed csv file
 
 if args.mode == "configure":
     # Write build.ninja and objdiff.json

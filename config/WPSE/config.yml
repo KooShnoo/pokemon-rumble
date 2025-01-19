@@ -1,7 +1,0 @@
-object_base: orig/WPSE
-object: main.dol
-hash: fd9a2c00c97e420a42355e2c27f3dc0ebbd3d8f9
-symbols: config/WPSE/symbols.txt
-splits: config/WPSE/splits.txt
-# map: WPSE.MAP
-mw_comment_version: 11

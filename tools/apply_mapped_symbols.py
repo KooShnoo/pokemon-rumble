@@ -28,7 +28,7 @@ for unit in units:
     del unit['symbol_mappings']
 
 
-with open("./config/WPSE/symbols.txt") as f:
+with open("./config/WPSE01_01/symbols.txt") as f:
     symbols = f.readlines()
 
 for i, line in enumerate(symbols):
@@ -43,7 +43,7 @@ for i, line in enumerate(symbols):
     tokens[0] = new_symbol
     symbols[i] = " ".join(tokens) + "\n"
 
-with open("./config/WPSE/symbols.txt", "w") as f:
+with open("./config/WPSE01_01/symbols.txt", "w") as f:
     f.writelines(symbols)
 
 with open("./objdiff.json", "w") as f:

@@ -25,5 +25,5 @@ pokemon_index_array = [
 
 header_csv = ','.join([f"{x}" for x in pokemon_index_array])
 
-with open("build/WPSE/include/pokemon_index_array.csv", "w") as f:
+with open("build/WPSE01_01/include/pokemon_index_array.csv", "w") as f:
     f.write(header_csv)
