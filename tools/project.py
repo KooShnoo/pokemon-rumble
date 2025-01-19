@@ -1663,6 +1663,7 @@ def generate_compile_commands(
                 "-nostdinc",
                 "-fno-builtin",
                 "--target=powerpc-eabi",
+                "-D__INTELLISENSE__",
                 "-D__attribute__(x)=",
                 "-D__declspec(x)=",
                 "-D__rlwimi(ra, rs, sh, mb, me)=0",

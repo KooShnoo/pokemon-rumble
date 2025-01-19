@@ -1,4 +1,5 @@
-#include <revolution/types.h>
+// #include <revolution/types.h>
+#include <types.h>
 #include <stdlib.h>
 
 void* (*callback)(void) = 0;

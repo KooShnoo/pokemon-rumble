@@ -1,6 +1,14 @@
 #ifndef MACROS_H
 #define MACROS_H
 
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wc11-extensions"
+#pragma clang diagnostic ignored "-Wc++17-extensions"
+#define static_assert(cls, size) _Static_assert(sizeof(cls) == size);
+#else
+#define static_assert(cls, size)
+#endif
+
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
@@ -27,9 +35,15 @@
 
 // For VSCode
 #ifdef __INTELLISENSE__
+typedef int __vec2x32float__;
+#define AT_ADDRESS(xyz)
+#define ARR_AT_ADDRESS(xyz) = {}
 #define asm
 #define __attribute__(x)
 #define __declspec(x)
+#else
+#define ARR_AT_ADDRESS(xyz) AT_ADDRESS(xyz)
+#define AT_ADDRESS(xyz) : (xyz)
 #endif
 
 #endif

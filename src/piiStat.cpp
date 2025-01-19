@@ -1,12 +1,4 @@
-#include <revolution/types.h>
-
-#ifdef __clang__
-#pragma clang diagnostic ignored "-Wc11-extensions"
-#pragma clang diagnostic ignored "-Wc++17-extensions"
-#define CHECK_SIZEOF(cls, size) _Static_assert(sizeof(cls) == size);
-#else
-#define CHECK_SIZEOF(cls, size)
-#endif
+#include <types.h>
 
 struct Pokemon {
     u8 _unk_data[12];
@@ -15,7 +7,7 @@ struct Pokemon {
     f32 stat1;
     f32 stat2;
 };
-CHECK_SIZEOF(Pokemon, 28)
+static_assert(Pokemon, 28);
 
 const Pokemon pokemon_array[560] = {{
     /* ._unk_data = */ {

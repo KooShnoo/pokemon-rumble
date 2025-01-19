@@ -4,4 +4,7 @@
 #include <internal/mbstring.h>
 #include <internal/rand.h>
 #include <internal/strtold.h>
+
+void *malloc(size_t size) __attribute__((nothrow));
+
 #endif
