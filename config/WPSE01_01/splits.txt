@@ -25,6 +25,21 @@ src/ks_alloc.cpp:
 libs/src/nw4r/g3d/res/g3d_resmat.cpp:
 	.text       start:0x8024F0B0 end:0x80250840
 
+libs/src/nw4r/g3d/res/g3d_resvtx.cpp:
+	.text       start:0x80250B00 end:0x80250EE0
+
+libs/src/nw4r/g3d/res/g3d_restex.cpp:
+	.text       start:0x80250EE0 end:0x80251130
+
+libs/src/nw4r/g3d/res/g3d_resnode.cpp:
+	.text       start:0x80251130 end:0x80251440
+
+libs/src/nw4r/g3d/res/g3d_resanm.cpp:
+	.text       start:0x80251440 end:0x80251460
+
+libs/src/nw4r/g3d/res/g3d_resanmvis.cpp:
+	.text       start:0x80251460 end:0x80251940
+
 libs/RVL_SDK/src/revolution/gx/GXInit.c:
 	.text       start:0x802C9B50 end:0x802CACE0 align:16
 
