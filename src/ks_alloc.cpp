@@ -5,6 +5,7 @@
 void* (*callback)(void) = 0;
 
 // ty chippy
+// I tihnk this is actually operator new
 void *ks_malloc(size_t size) throw() {
     if (size == 0) {
         size = 4;

@@ -4,9 +4,9 @@
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wc11-extensions"
 #pragma clang diagnostic ignored "-Wc++17-extensions"
-#define static_assert(cls, size) _Static_assert(sizeof(cls) == size);
+#define static_assert(cond) _Static_assert(cond);
 #else
-#define static_assert(cls, size)
+#define static_assert(cond)
 #endif
 
 #define MAX(x, y) ((x) > (y) ? (x) : (y))

@@ -1,3 +1,4 @@
+#include "macros.h"
 #include <types.h>
 
 struct Pokemon {
@@ -7,7 +8,7 @@ struct Pokemon {
     f32 stat1;
     f32 stat2;
 };
-static_assert(Pokemon, 28);
+static_assert(sizeof(Pokemon) == 28);
 
 const Pokemon pokemon_array[560] = {{
     /* ._unk_data = */ {
