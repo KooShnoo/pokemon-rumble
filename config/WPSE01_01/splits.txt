@@ -22,6 +22,21 @@ src/ks_alloc.cpp:
 	extabindex  start:0x80050820 end:0x8005082C
 	.text       start:0x801B1450 end:0x801B14D8
 
+libs/src/nw4r/g3d/res/g3d_rescommon.cpp:
+	.text       start:0x8024AE80 end:0x8024B030
+
+libs/src/nw4r/g3d/res/g3d_resdict.cpp:
+	.text       start:0x8024B030 end:0x8024C080
+
+libs/src/nw4r/g3d/res/g3d_resfile.cpp:
+	.text       start:0x8024C080 end:0x8024D000
+
+libs/src/nw4r/g3d/res/g3d_resmdl.cpp:
+	.text       start:0x8024D000 end:0x8024E150
+
+libs/src/nw4r/g3d/res/g3d_resshp.cpp:
+	.text       start:0x8024E150 end:0x8024F0B0
+
 libs/src/nw4r/g3d/res/g3d_resmat.cpp:
 	.text       start:0x8024F0B0 end:0x80250840
 
@@ -40,49 +55,60 @@ libs/src/nw4r/g3d/res/g3d_resanm.cpp:
 libs/src/nw4r/g3d/res/g3d_resanmvis.cpp:
 	.text       start:0x80251460 end:0x80251940
 
-libs/RVL_SDK/src/revolution/gx/GXInit.c:
+libs/src/nw4r/g3d/res/g3d_resanmtexpat.cpp:
+	.text       start:0x80251940 end:0x80251D00
+
+libs/src/nw4r/g3d/res/g3d_resanmchr.cpp:
+	.text       start:0x80251D00 end:0x80253DF0
+
+libs/src/revolution/GX/GXInit.c:
 	.text       start:0x802C9B50 end:0x802CACE0 align:16
 
-libs/RVL_SDK/src/revolution/gx/GXFifo.c:
+libs/src/revolution/GX/GXFifo.c:
 	.text       start:0x802CACE0 end:0x802CB520 align:16
 
-libs/RVL_SDK/src/revolution/gx/GXAttr.c:
+libs/src/revolution/GX/GXAttr.c:
 	.text       start:0x802CB6C0 end:0x802CC630 align:16
+	.sdata      start:0x804B8B28 end:0x804B8B38
 
-libs/RVL_SDK/src/revolution/gx/GXMisc.c:
+libs/src/revolution/GX/GXMisc.c:
 	.text       start:0x802CC630 end:0x802CCE30 align:16
 
-libs/RVL_SDK/src/revolution/gx/GXGeometry.c:
+libs/src/revolution/GX/GXGeometry.c:
 	.text       start:0x802CCE30 end:0x802CD480 align:16
 
-libs/RVL_SDK/src/revolution/gx/GXFrameBuf.c:
+libs/src/revolution/GX/GXFrameBuf.c:
 	.text       start:0x802CD480 end:0x802CDEC0 align:16
 
-libs/RVL_SDK/src/revolution/gx/GXLight.c:
+libs/src/revolution/GX/GXLight.c:
 	.text       start:0x802CDEC0 end:0x802CE630 align:16
+	.sdata2     start:0x804BB310 end:0x804BB340
 
-libs/RVL_SDK/src/revolution/gx/GXTexture.c:
+libs/src/revolution/GX/GXTexture.c:
 	.text       start:0x802CE630 end:0x802CF730 align:16
 
-libs/RVL_SDK/src/revolution/gx/GXBump.c:
+libs/src/revolution/GX/GXBump.c:
 	.text       start:0x802CF730 end:0x802CFB90 align:16
 
-libs/RVL_SDK/src/revolution/gx/GXTev.c:
+libs/src/revolution/GX/GXTev.c:
 	.text       start:0x802CFB90 end:0x802D0260 align:16
 
-libs/RVL_SDK/src/revolution/gx/GXPixel.c:
+libs/src/revolution/GX/GXPixel.c:
 	.text       start:0x802D0260 end:0x802D09E0 align:16
+	.data       start:0x803D6708 end:0x803D6728
+	.sdata2     start:0x804BB388 end:0x804BB3D8
 
-libs/RVL_SDK/src/revolution/gx/GXDisplayList.c:
+libs/src/revolution/GX/GXDisplayList.c:
 	.text       start:0x802D09E0 end:0x802D0AB0 align:16
 
-libs/RVL_SDK/src/revolution/gx/GXTransform.c:
+libs/src/revolution/GX/GXTransform.c:
 	.text       start:0x802D0AB0 end:0x802D1020 align:16
+	.sdata2     start:0x804BB3D8 end:0x804BB3E8
 
-libs/RVL_SDK/src/revolution/gx/GXPerf.c:
+libs/src/revolution/GX/GXPerf.c:
 	.text       start:0x802D1020 end:0x802D1850 align:16
 
-libs/RVL_SDK/src/revolution/fs/fs.c:
+libs/src/revolution/fs/fs.c:
 	.text       start:0x802F3430 end:0x802F4C40 align:16
 
 libs/PowerPC_EABI_Support/src/Runtime/__mem.c:
