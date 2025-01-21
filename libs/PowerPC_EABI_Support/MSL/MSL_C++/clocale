@@ -1,0 +1,14 @@
+#ifndef MSL_CPP_CLOCALE_H
+#define MSL_CPP_CLOCALE_H
+#include <MSL_C/locale.h>
+
+// NOLINTBEGIN(misc-unused-using-decls)
+namespace std {
+    using ::lconv;
+
+    using ::localeconv;
+    using ::setlocale;
+}
+// NOLINTEND(misc-unused-using-decls)
+
+#endif
