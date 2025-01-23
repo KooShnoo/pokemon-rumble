@@ -26,16 +26,16 @@ libs/src/nw4r/g3d/res/g3d_rescommon.cpp:
 	.text       start:0x8024AE80 end:0x8024B030
 
 libs/src/nw4r/g3d/res/g3d_resdict.cpp:
-	.text       start:0x8024B030 end:0x8024C080
+	.text       start:0x8024B030 end:0x8024B3B0
 
 libs/src/nw4r/g3d/res/g3d_resfile.cpp:
-	.text       start:0x8024C080 end:0x8024D000
+	.text       start:0x8024B3B0 end:0x8024D000
 
 libs/src/nw4r/g3d/res/g3d_resmdl.cpp:
-	.text       start:0x8024D000 end:0x8024E150
+	.text       start:0x8024D000 end:0x8024E100
 
 libs/src/nw4r/g3d/res/g3d_resshp.cpp:
-	.text       start:0x8024E150 end:0x8024F0B0
+	.text       start:0x8024E100 end:0x8024F0B0
 
 libs/src/nw4r/g3d/res/g3d_resmat.cpp:
 	.text       start:0x8024F0B0 end:0x80250840
@@ -82,7 +82,7 @@ libs/src/revolution/GX/GXFrameBuf.c:
 
 libs/src/revolution/GX/GXLight.c:
 	.text       start:0x802CDEC0 end:0x802CE630 align:16
-	.sdata2     start:0x804BB310 end:0x804BB340
+	.sdata2     start:0x804BB310 end:0x804BB348
 
 libs/src/revolution/GX/GXTexture.c:
 	.text       start:0x802CE630 end:0x802CF730 align:16
