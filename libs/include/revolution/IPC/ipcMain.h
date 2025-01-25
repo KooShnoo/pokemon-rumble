@@ -1,11 +1,12 @@
 #ifndef RVL_SDK_IPC_MAIN_H
 #define RVL_SDK_IPC_MAIN_H
+#include "macros.h"
 #include <types.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-u32 IPC_HW_REGS[] : 0xCD000000;
+u32 IPC_HW_REGS[] ARR_AT_ADDRESS(0xCD000000);
 
 inline u32 ACRReadReg(u32 reg) {
     return IPC_HW_REGS[reg / 4];
