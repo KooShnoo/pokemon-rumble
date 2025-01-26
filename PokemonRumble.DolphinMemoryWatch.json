@@ -1,0 +1,47 @@
+{
+    "watchList": [
+        {
+            "groupEntries": [
+                {
+                    "address": "804B9000",
+                    "baseIndex": 1,
+                    "label": "pInstance",
+                    "typeIndex": 2,
+                    "unsigned": false
+                },
+                {
+                    "groupEntries": [
+                        {
+                            "address": "804B9000",
+                            "baseIndex": 1,
+                            "label": "pPlayer",
+                            "pointerOffsets": [
+                                "44"
+                            ],
+                            "typeIndex": 2,
+                            "unsigned": false
+                        },
+                        {
+                            "groupEntries": [
+                                {
+                                    "address": "804B9000",
+                                    "baseIndex": 1,
+                                    "label": "pPlayerPii",
+                                    "pointerOffsets": [
+                                        "44",
+                                        "60"
+                                    ],
+                                    "typeIndex": 2,
+                                    "unsigned": false
+                                }
+                            ],
+                            "groupName": "CPlayerPii"
+                        }
+                    ],
+                    "groupName": "CPlayer"
+                }
+            ],
+            "groupName": "CGameSession"
+        }
+    ]
+}
