@@ -2,7 +2,7 @@
  */
 
 #include "MWCPlusLib.h"
-#include "compiler_macros.h"
+#include "macros.h"
 
 #ifdef __cplusplus
 extern "C" {

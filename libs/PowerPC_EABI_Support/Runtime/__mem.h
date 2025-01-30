@@ -4,7 +4,7 @@
 #include "MSL_C/MSL_Common/size_def.h" /* IWYU pragma: keep */
 #include "MSL_C/MSL_Common/restrict_def.h"
 
-#include "compiler_macros.h"
+#include "macros.h"
 
 #ifdef __cplusplus
 extern "C" {

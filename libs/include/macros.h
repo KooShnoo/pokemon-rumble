@@ -33,6 +33,9 @@
 
 #define DECLTYPE(x) __decltype__(x)
 
+#define DONT_INLINE __declspec(noinline) // use for regular functions
+#define DONT_INLINE_CLASS __attribute__((never_inline)) // use for class methods
+
 // For VSCode
 #ifdef __INTELLISENSE__
 typedef int __vec2x32float__;

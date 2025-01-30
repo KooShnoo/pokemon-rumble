@@ -1,7 +1,7 @@
 #ifndef _ERRNO_H
 #define _ERRNO_H
 
-#include "compiler_macros.h"
+#include "macros.h"
 
 #ifdef __cplusplus
 extern "C" {

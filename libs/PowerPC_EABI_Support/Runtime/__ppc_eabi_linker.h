@@ -1,7 +1,7 @@
 #ifndef __PPC_EABI_LINKER
 #define __PPC_EABI_LINKER
 
-#include "compiler_macros.h"
+#include "macros.h"
 
 DECL_SECTION(".init") extern char _stack_addr[];
 DECL_SECTION(".init") extern char _stack_end[];

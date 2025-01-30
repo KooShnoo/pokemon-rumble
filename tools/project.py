@@ -1667,6 +1667,7 @@ def generate_compile_commands(
                 "-D__attribute__(x)=",
                 "-D__declspec(x)=",
                 "-D__rlwimi(ra, rs, sh, mb, me)=0",
+                "-DDECOMP_IDE_FLAG",
                 *cflags,
                 "-c",
                 obj.src_path,

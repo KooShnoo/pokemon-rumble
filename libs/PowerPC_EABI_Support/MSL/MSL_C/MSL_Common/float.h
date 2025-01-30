@@ -1,7 +1,7 @@
 #ifndef MSL_COMMON_FLOAT_H
 #define MSL_COMMON_FLOAT_H
 
-#include "compiler_macros.h"
+#include "macros.h"
 
 #ifdef __cplusplus
 extern "C" {

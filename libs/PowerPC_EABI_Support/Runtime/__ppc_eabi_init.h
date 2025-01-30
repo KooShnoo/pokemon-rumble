@@ -2,7 +2,7 @@
 #define _RUNTIME_PPC_EABI_INIT_H
 
 #include "MSL_C/MSL_Common/size_def.h" /* IWYU pragma: keep */
-#include "compiler_macros.h"
+#include "macros.h"
 
 #ifdef __cplusplus
 extern "C" {

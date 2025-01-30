@@ -12,7 +12,7 @@
 
 #include "MSL_C++/Metrowerks/compressed_pair.h"
 
-#include "compiler_macros.h"
+#include "macros.h"
 
 // hack
 namespace ec {
