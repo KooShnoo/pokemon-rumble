@@ -17,11 +17,6 @@ src/piiStat.cpp:
 	.text       start:0x80124EE0 end:0x80124F10
 	.rodata     start:0x8035DF88 end:0x803620C0
 
-src/ks_alloc.cpp:
-	extab       start:0x80038488 end:0x800384B4
-	extabindex  start:0x80050820 end:0x8005082C
-	.text       start:0x801B1450 end:0x801B14D8
-
 libs/src/nw4r/g3d/res/g3d_rescommon.cpp:
 	.text       start:0x8024AE80 end:0x8024B030
 

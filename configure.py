@@ -307,7 +307,6 @@ config.warn_missing_source = False
 config.libs = [
     Game([
         Object(NonMatching, "piiStat.cpp"),
-        Object(NonMatching, "ks_alloc.cpp")
     ]),
     # {
     #     "lib": "Runtime.PPCEABI.H",
