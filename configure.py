@@ -144,8 +144,8 @@ if not config.non_matching:
 # Tool versions
 config.binutils_tag = "2.42-1"
 config.compilers_tag = "20240706"
-config.dtk_tag = "v1.3.0"
-config.objdiff_tag = "v2.4.0"
+config.dtk_tag = "v1.4.1"
+config.objdiff_tag = "v2.7.1"
 config.sjiswrap_tag = "v1.2.0"
 config.wibo_tag = "0.6.11"
 
@@ -269,7 +269,7 @@ cflags_game = [
     "-sdata2 0",
 ]
 
-config.linker_version = "GC/1.3.2"
+config.linker_version = "Wii/1.1"
 
 
 # Helper function for Dolphin libraries
@@ -314,26 +314,26 @@ config.libs = [
         Object(NonMatching, "piiStat.cpp"),
         Object(NonMatching, "ppu/CPpuEngine.cpp"),
     ]),
-    # {
-    #     "lib": "Runtime.PPCEABI.H",
-    #     "mw_version": "Wii/1.1",
-    #     "src_dir": "libs/PowerPC_EABI_Support/src",
-    #     "cflags": cflags_runtime,
-    #     "progress_category": "sdk",
-    #     "objects": [
-    #         Object(Matching, "Runtime/__mem.c"),
-    #         # Object(NonMatching, "Runtime/__va_arg.c"),
-    #         # Object(NonMatching, "Runtime/global_destructor_chain.c"),
-    #         # Object(NonMatching, "Runtime/New.cp", extra_cflags = ["-Cpp_exceptions on", "-RTTI on"]),
-    #         Object(NonMatching, "Runtime/NMWException.cp", extra_cflags = ["-Cpp_exceptions on"]),
-    #         Object(Matching, "Runtime/ptmf.c"),
-    #         Object(NonMatching, "Runtime/MWRTTI.cp", extra_cflags = ["-Cpp_exceptions on", "-RTTI on"]),
-    #         Object(NonMatching, "Runtime/runtime.c"),
-    #         # Object(NonMatching, "Runtime/__init_cpp_exceptions.cpp"),
-    #         Object(NonMatching, "Runtime/Gecko_ExceptionPPC.cp", extra_cflags = ["-Cpp_exceptions on"]),
-    #         # Object(NonMatching, "Runtime/GCN_mem_alloc.c"),
-    #     ],
-    # },
+    {
+        "lib": "Runtime.PPCEABI.H",
+        "mw_version": "Wii/1.1",
+        "src_dir": "libs/PowerPC_EABI_Support/Runtime",
+        "cflags": cflags_runtime,
+        "progress_category": "sdk",
+        "objects": [
+            # Object(NonMatching, "__mem.c"),
+            Object(NonMatching, "__va_arg.c"),
+            Object(NonMatching, "global_destructor_chain.c"),
+            Object(NonMatching, "New.cpp", extra_cflags = ["-Cpp_exceptions on", "-RTTI on"]),
+            Object(NonMatching, "NMWException.cpp", extra_cflags = ["-Cpp_exceptions on"]),
+            Object(NonMatching, "ptmf.c"),
+            Object(NonMatching, "MWRTTI.cpp", extra_cflags = ["-Cpp_exceptions on", "-RTTI on"]),
+            Object(NonMatching, "runtime.c"),
+            Object(NonMatching, "__init_cpp_exceptions.cpp"),
+            Object(NonMatching, "Gecko_ExceptionPPC.cpp", extra_cflags = ["-Cpp_exceptions on"]),
+            # Object(NonMatching, "GCN_mem_alloc.c"),
+        ],
+    },
     # {
     #     "lib": "MSL_C.PPCEABI.bare.H",
     #     "mw_version": "Wii/1.1",
