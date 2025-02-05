@@ -11,8 +11,8 @@
 
 namespace std {
 
-    template <typename T>
-    static T declval() { __MWERKS_NOEVAL; }
+    // template <typename T>
+    // static T declval() { __MWERKS_NOEVAL; }
 
 }
 

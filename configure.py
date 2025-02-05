@@ -197,10 +197,9 @@ cflags_base = [
     "-fp_contract on",
     "-str reuse",
     "-enc SJIS",
-    "-i include",
+    "-gccinc",
+    "-i src",
     "-i libs/include/",
-    "-i libs/include/MSL",
-    "-i libs/include/MSL/internal",
     "-i libs/PowerPC_EABI_Support/include",
     "-i libs/include/RVL_SDK",
     "-i libs/include/nw4r",
@@ -242,6 +241,8 @@ cflags_mslc = [
 
 # NintendoWare for Revolution (nw4r) flags
 cflags_nw4r = [
+    "-i libs/include/MSL",
+    "-i libs/include/MSL/internal",
     *cflags_base,
     "-inline auto",
     "-fp_contract off",
@@ -251,6 +252,8 @@ cflags_nw4r = [
 
 # Revolution Software Development Kit (RVL_SDK) flags
 cflags_rvl = [
+    "-i libs/include/MSL",
+    "-i libs/include/MSL/internal",
     *cflags_base,
     "-inline auto",
     "-fp_contract off",
@@ -447,7 +450,8 @@ config.libs = [
             Object(NonMatching, "revolution/GX/GXTev.c"),
             Object(NonMatching, "revolution/GX/GXPixel.c"),
             Object(NonMatching, "revolution/GX/GXDraw.c"),
-            Object(NonMatching, "revolution/GX/GXDisplayList.c"),
+            Object(NonMatching, "revolution/GX/GXDisplayList.c",
+                   extra_cflags=["-warnings off"]),
             Object(NonMatching, "revolution/GX/GXTransform.c"),
             Object(NonMatching, "revolution/GX/GXPerf.c"),
             Object(NonMatching, "revolution/IPC/ipcMain.c"),

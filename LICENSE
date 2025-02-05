@@ -1,3 +1,5 @@
+any copyright information or similar listed in the code supercedes the licenses written here.
+
 code in the libs/ directory is primarily taken from https://github.com/doldecomp/ogws. their license is as follows:
 
 MIT License
@@ -22,9 +24,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-the following license applies to all other code in this repository.
+the following license applies to all other code in this repository except as stated otherwise.
 this repository is generated from https://github.com/encounter/dtk-template, which also uses this license.
 some code in the libs/ directory may be adapted from https://github.com/xbret/xenoblade/, which also uses this license.
+some code in the libs/ directory is adapted from https://github.com/DarkRTA/rb3/.
 
 CC0 1.0 Universal
 

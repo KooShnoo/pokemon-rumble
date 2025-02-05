@@ -13,6 +13,8 @@
 #include <decomp.h>
 #include <macros.h>
 
+#include <wchar.h>
+
 typedef unsigned long long u64;
 typedef signed long long s64;
 
