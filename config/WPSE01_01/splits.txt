@@ -13,6 +13,12 @@ Sections:
 	.sdata2     type:rodata align:32
 	.sbss2      type:bss align:8
 
+src/ppu/CPpuEngine.cpp:
+	extab       start:0x80026DBC end:0x80027C68
+	extabindex  start:0x8004B18C end:0x8004B3A8
+	.text       start:0x800FE5B0 end:0x80103640
+	.ctors      start:0x803529DC end:0x803529E0
+
 src/piiStat.cpp:
 	.text       start:0x80124EE0 end:0x80124F10
 	.rodata     start:0x8035DF88 end:0x803620C0

@@ -165,7 +165,8 @@ config.ldflags = [
     "-nodefaults",
 ]
 if args.debug:
-    config.ldflags.append("-gdwarf-2")
+    # config.ldflags.append("-gdwarf-2")
+    config.ldflags.append("-g")
 if args.map:
     config.ldflags.append("-mapunused")
     # config.ldflags.append("-listclosure") # For Wii linkers
@@ -261,8 +262,9 @@ cflags_rvl = [
 
 cflags_game = [
     *cflags_base,
+    "-ipa file",
     "-Cpp_exceptions on",
-    # "-RTTI on",
+    "-RTTI on",
     "-sdata 0",
     "-sdata2 0",
 ]
@@ -310,6 +312,7 @@ config.warn_missing_source = False
 config.libs = [
     Game([
         Object(NonMatching, "piiStat.cpp"),
+        Object(NonMatching, "ppu/CPpuEngine.cpp"),
     ]),
     # {
     #     "lib": "Runtime.PPCEABI.H",
