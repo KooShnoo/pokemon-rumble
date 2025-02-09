@@ -1,4 +1,3 @@
-
 #include "MSL_Common/detail/msl_smart_pointers.hpp"
 #include <ppu/CPpuEngine.hpp>
 
@@ -8,7 +7,7 @@
 
 void fn_8005F450() throw();
 
-static u32 lbl_804B9060 = 0;
+static u8 lbl_804B9060 = 0;
 
 void CPpuEngine::runScript() throw() {
     if (this->exec_pkc_return_value == 0) {
@@ -17,7 +16,7 @@ void CPpuEngine::runScript() throw() {
 
     while (1) {
         u32 tickRetVal = this->tickOnce();
-        // wtf???
+        // todo: this is a compiler optimization
         if ((tickRetVal < 2) && (tickRetVal - 3 < 2)) {
             break;
         }
@@ -39,41 +38,54 @@ void CPpuEngine::runScript() throw() {
 void fn_801738C0(u32);
 void fn_8019E770();
 
-s32 ks_doPKC_fun1(std::basic_string<char> &pkcName, s32 one,
-                  std::tr1::shared_ptr<CPpuEnv> env) {
+u32 CPpuEngine::execScript(const char *pkcName, s32 one,
+                           std::tr1::shared_ptr<CPpuEnv> *env) {
 
-    std::tr1::shared_ptr<CPpuEngine> engine(new CPpuEngine());
-    engine->shared = engine.get();
     if (lbl_804B9060 == 0) {
         lbl_804B9060 = 1;
         fn_801738C0(1000000000);
     }
 
-    engine->prepareScript(&pkcName, 0, env);
-
-    s32 ret = 1;
-
-    if (!engine) {
+    if (this->prepareScript(pkcName, one, env) == 0) {
         return 0;
     }
 
     while (true) {
-        engine->runScript();
-        u32 nextEngineCmd = engine->exec_pkc_return_value;
-
-        if (nextEngineCmd == 0 || nextEngineCmd == 1 || nextEngineCmd == 4) {
-            ret = 0;
+        this->runScript();
+        s32 nextState = this->exec_pkc_return_value;
+        switch (nextState) {
+        case 0:
+        case 1:
+        case 4:
+            return 0;
+        case 2:
+            if (one == 1) {
+                fn_8019E770();
+            }
             break;
-        }
-
-        if (nextEngineCmd != 2) {
-            break;
-        }
-
-        if (one == 1) {
-            fn_8019E770();
+        case 3:
+            return 1;
         }
     }
 
-    return ret;
+    return 1;
+}
+
+u32 ks_doPKC_fun1(std::basic_string<char> &pkcName, s32 one,
+                  std::tr1::shared_ptr<CPpuEnv> *env) {
+
+    // CPpuEngine *engine = new CPpuEngine();
+    // std::tr1::shared_ptr<CPpuEngine> pEngine(engine);
+    std::tr1::shared_ptr<CPpuEngine> engine(new CPpuEngine());
+    // std::tr1::shared_ptr<CPpuEngine> pEngine = engine->shared_from_this();
+    // pEngine->shared = pEngine->shared_from_this();
+    // engine->shared =
+    // std::tr1::shared_ptr<CPpuEngine>(std::tr1::weak_ptr<CPpuEngine>(engine));
+    // engine->shared =
+    // std::tr1::shared_ptr<CPpuEngine>(std::tr1::weak_ptr<CPpuEngine>(engine));
+
+    // engine->shared =
+    // std::tr1::shared_ptr<CPpuEngine>(std::tr1::weak_ptr<CPpuEngine>(engine));
+
+    return engine->execScript(pkcName.c_str(), one, env);
 }
