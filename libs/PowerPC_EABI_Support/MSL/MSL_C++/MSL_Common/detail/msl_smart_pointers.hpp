@@ -4,36 +4,42 @@
  * $Date: 2006/02/09 16:58:58 $
  * $Revision: 1.21.2.5 $
  */
- 
+
 // Adapted for interoperation with reverse-engineered headers.
- 
+
 #pragma once
 
 #include "Metrowerks/compressed_pair.h"
-#include <MSL_C++/MSL_Common/type_traits.h>
 #include <MSL_C++/MSL_Common/detail/type_traits.hpp>
+#include <MSL_C++/MSL_Common/type_traits.h>
+
+#define _MSL_NO_THROW throw()
 
 #if !_MSL_TR1_NAMESPACE
-	#define _TR1 tr1
-	#define _STD_TR1 _STD::tr1
+#define _TR1 tr1
+#define _STD_TR1 _STD::tr1
 #ifdef _MSL_NO_CPP_NAMESPACE
-	#define _MSL_START_TR1_NAMESPACE namespace tr1 {
-	#define _MSL_END_TR1_NAMESPACE }
-#else  // _MSL_NO_CPP_NAMESPACE
-	#define _MSL_START_TR1_NAMESPACE namespace std { namespace tr1 {
-	#define _MSL_END_TR1_NAMESPACE } }
-#endif  // _MSL_NO_CPP_NAMESPACE
+#define _MSL_START_TR1_NAMESPACE namespace tr1 {
+#define _MSL_END_TR1_NAMESPACE }
+#else // _MSL_NO_CPP_NAMESPACE
+#define _MSL_START_TR1_NAMESPACE                                               \
+    namespace std {                                                            \
+    namespace tr1 {
+#define _MSL_END_TR1_NAMESPACE                                                 \
+    }                                                                          \
+    }
+#endif // _MSL_NO_CPP_NAMESPACE
 #else  // _MSL_TR1_NAMESPACE
 #ifdef _MSL_NO_CPP_NAMESPACE
-	#define _MSL_START_TR1_NAMESPACE
-	#define _MSL_END_TR1_NAMESPACE
-#else  // _MSL_NO_CPP_NAMESPACE
-	#define _MSL_START_TR1_NAMESPACE namespace std {
-	#define _MSL_END_TR1_NAMESPACE }
-#endif  // _MSL_NO_CPP_NAMESPACE
-	#define _TR1 _STD
-	#define _STD_TR1 _STD
-#endif  // _MSL_TR1_NAMESPACE
+#define _MSL_START_TR1_NAMESPACE
+#define _MSL_END_TR1_NAMESPACE
+#else // _MSL_NO_CPP_NAMESPACE
+#define _MSL_START_TR1_NAMESPACE namespace std {
+#define _MSL_END_TR1_NAMESPACE }
+#endif // _MSL_NO_CPP_NAMESPACE
+#define _TR1 _STD
+#define _STD_TR1 _STD
+#endif // _MSL_TR1_NAMESPACE
 
 // msl_smart_pointers
 
@@ -46,7 +52,6 @@
 #include <iosfwd>
 #include <msl_utility>
 #include <typeinfo>
-
 
 #if defined(_MSL_SHARED_PTR_HAS_MUTEX) && !defined(__POWERPC__)
 #include <msl_mutex>
@@ -134,25 +139,25 @@ template <class X, class traits = _Single<X>> class auto_ptr {
     typedef X element_type;
 
     //  lib.auto.ptr.cons construct/copy/destroy:
-    explicit auto_ptr(X *p = 0) throw();
-    auto_ptr(auto_ptr &a) throw();
+    explicit auto_ptr(X *p = 0) _MSL_NO_THROW;
+    auto_ptr(auto_ptr &a) _MSL_NO_THROW;
 #ifndef _MSL_MUST_INLINE_MEMBER_TEMPLATE
     template <class Y>
-    auto_ptr(auto_ptr<Y, typename traits::rebind<Y>::other> &a) throw();
+    auto_ptr(auto_ptr<Y, typename traits::rebind<Y>::other> &a) _MSL_NO_THROW;
 #else
     template <class Y>
-    inline auto_ptr(auto_ptr<Y, typename traits::rebind<Y>::other> &a) throw()
-        : ptr_(a.release()) {}
+    inline auto_ptr(auto_ptr<Y, typename traits::rebind<Y>::other> &a)
+        _MSL_NO_THROW : ptr_(a.release()) {}
 #endif // _MSL_MUST_INLINE_MEMBER_TEMPLATE
-    auto_ptr &operator=(auto_ptr &a) throw();
+    auto_ptr &operator=(auto_ptr &a) _MSL_NO_THROW;
 #ifndef _MSL_MUST_INLINE_MEMBER_TEMPLATE
     template <class Y>
     auto_ptr &
-    operator=(auto_ptr<Y, typename traits::rebind<Y>::other> &a) throw();
+    operator=(auto_ptr<Y, typename traits::rebind<Y>::other> &a) _MSL_NO_THROW;
 #else
     template <class Y>
     inline auto_ptr &
-    operator=(auto_ptr<Y, typename traits::rebind<Y>::other> &a) throw() {
+    operator=(auto_ptr<Y, typename traits::rebind<Y>::other> &a) _MSL_NO_THROW {
         reset(a.release());
         return *this;
     }
@@ -160,34 +165,34 @@ template <class X, class traits = _Single<X>> class auto_ptr {
     ~auto_ptr() __attribute__((nothrow));
 
     //  lib.auto.ptr.members members:
-    X &operator*() const throw();
-    X *operator->() const throw();
-    X *get() const throw();
-    X *release() throw();
-    void reset(X *p = 0) throw();
+    X &operator*() const _MSL_NO_THROW;
+    X *operator->() const _MSL_NO_THROW;
+    X *get() const _MSL_NO_THROW;
+    X *release() _MSL_NO_THROW;
+    void reset(X *p = 0) _MSL_NO_THROW;
 
     //  lib.auto.ptr.conv conversions:
-    auto_ptr(auto_ptr_ref<X, traits> r) throw();
-    auto_ptr &operator=(auto_ptr_ref<X, traits> r) throw();
+    auto_ptr(auto_ptr_ref<X, traits> r) _MSL_NO_THROW;
+    auto_ptr &operator=(auto_ptr_ref<X, traits> r) _MSL_NO_THROW;
 #if !defined(_MSL_NO_MEMBER_TEMPLATE) && __MWERKS__ >= 0x2400
     template <class Y>
-    operator auto_ptr_ref<Y, typename traits::rebind<Y>::other>() throw();
+    operator auto_ptr_ref<Y, typename traits::rebind<Y>::other>() _MSL_NO_THROW;
     template <class Y>
-    operator auto_ptr<Y, typename traits::rebind<Y>::other>() throw();
+    operator auto_ptr<Y, typename traits::rebind<Y>::other>() _MSL_NO_THROW;
 #endif // !defined (_MSL_NO_MEMBER_TEMPLATE) && __MWERKS__ >= 0x2400
   private:
     X *ptr_;
 };
 
 template <class X, class traits>
-inline X *auto_ptr<X, traits>::release() throw() {
+inline X *auto_ptr<X, traits>::release() _MSL_NO_THROW {
     X *tmp = ptr_;
     ptr_ = 0;
     return tmp;
 }
 
 template <class X, class traits>
-inline void auto_ptr<X, traits>::reset(X *p) throw() {
+inline void auto_ptr<X, traits>::reset(X *p) _MSL_NO_THROW {
     if (ptr_ != p) {
         traits::destroy(ptr_);
         ptr_ = p;
@@ -195,24 +200,25 @@ inline void auto_ptr<X, traits>::reset(X *p) throw() {
 }
 
 template <class X, class traits>
-inline auto_ptr<X, traits>::auto_ptr(X *p) throw() : ptr_(p) {}
+inline auto_ptr<X, traits>::auto_ptr(X *p) _MSL_NO_THROW : ptr_(p) {}
 
 template <class X, class traits>
-inline auto_ptr<X, traits>::auto_ptr(auto_ptr &a) throw() : ptr_(a.release()) {}
+inline auto_ptr<X, traits>::auto_ptr(auto_ptr &a) _MSL_NO_THROW
+    : ptr_(a.release()) {}
 
 #ifndef _MSL_MUST_INLINE_MEMBER_TEMPLATE
 
 template <class X, class traits>
 template <class Y>
 inline auto_ptr<X, traits>::auto_ptr(
-    auto_ptr<Y, typename traits::rebind<Y>::other> &a) throw()
+    auto_ptr<Y, typename traits::rebind<Y>::other> &a) _MSL_NO_THROW
     : ptr_(a.release()) {}
 
 #endif // _MSL_MUST_INLINE_MEMBER_TEMPLATE
 
 template <class X, class traits>
 inline auto_ptr<X, traits> &
-auto_ptr<X, traits>::operator=(auto_ptr &a) throw() {
+auto_ptr<X, traits>::operator=(auto_ptr &a) _MSL_NO_THROW {
     reset(a.release());
     return *this;
 }
@@ -222,7 +228,7 @@ auto_ptr<X, traits>::operator=(auto_ptr &a) throw() {
 template <class X, class traits>
 template <class Y>
 inline auto_ptr<X, traits> &auto_ptr<X, traits>::operator=(
-    auto_ptr<Y, typename traits::rebind<Y>::other> &a) throw() {
+    auto_ptr<Y, typename traits::rebind<Y>::other> &a) _MSL_NO_THROW {
     reset(a.release());
     return *this;
 }
@@ -234,27 +240,27 @@ template <class X, class traits> inline auto_ptr<X, traits>::~auto_ptr() {
 }
 
 template <class X, class traits>
-inline X &auto_ptr<X, traits>::operator*() const throw() {
+inline X &auto_ptr<X, traits>::operator*() const _MSL_NO_THROW {
     return *ptr_;
 }
 
 template <class X, class traits>
-inline X *auto_ptr<X, traits>::operator->() const throw() {
+inline X *auto_ptr<X, traits>::operator->() const _MSL_NO_THROW {
     return ptr_;
 }
 
 template <class X, class traits>
-inline X *auto_ptr<X, traits>::get() const throw() {
+inline X *auto_ptr<X, traits>::get() const _MSL_NO_THROW {
     return ptr_;
 }
 
 template <class X, class traits>
-inline auto_ptr<X, traits>::auto_ptr(auto_ptr_ref<X, traits> r) throw()
+inline auto_ptr<X, traits>::auto_ptr(auto_ptr_ref<X, traits> r) _MSL_NO_THROW
     : ptr_(r.ptr_) {}
 
 template <class X, class traits>
 inline auto_ptr<X, traits> &
-auto_ptr<X, traits>::operator=(auto_ptr_ref<X, traits> r) throw() {
+auto_ptr<X, traits>::operator=(auto_ptr_ref<X, traits> r) _MSL_NO_THROW {
     reset(r.ptr_);
     return *this;
 }
@@ -264,7 +270,7 @@ auto_ptr<X, traits>::operator=(auto_ptr_ref<X, traits> r) throw() {
 template <class X, class traits>
 template <class Y>
 inline auto_ptr<X, traits>::operator auto_ptr_ref<
-    Y, typename traits::rebind<Y>::other>() throw() {
+    Y, typename traits::rebind<Y>::other>() _MSL_NO_THROW {
     auto_ptr_ref<Y, typename traits::rebind<Y>::other> r;
     r.ptr_ = release();
     return r;
@@ -273,7 +279,7 @@ inline auto_ptr<X, traits>::operator auto_ptr_ref<
 template <class X, class traits>
 template <class Y>
 inline auto_ptr<X, traits>::operator auto_ptr<
-    Y, typename traits::rebind<Y>::other>() throw() {
+    Y, typename traits::rebind<Y>::other>() _MSL_NO_THROW {
     return auto_ptr<Y, typename traits::rebind<Y>::other>(release());
 }
 
@@ -290,22 +296,23 @@ template <class X> class auto_ptr {
     typedef X element_type;
 
     //  lib.auto.ptr.cons construct/copy/destroy:
-    explicit auto_ptr(X *p = 0) throw();
-    auto_ptr(auto_ptr &a) throw();
+    explicit auto_ptr(X *p = 0) _MSL_NO_THROW;
+    auto_ptr(auto_ptr &a) _MSL_NO_THROW;
 #ifndef _MSL_NO_MEMBER_TEMPLATE
 #ifndef _MSL_MUST_INLINE_MEMBER_TEMPLATE
-    template <class Y> auto_ptr(auto_ptr<Y> &a) throw();
+    template <class Y> auto_ptr(auto_ptr<Y> &a) _MSL_NO_THROW;
 #else
     template <class Y>
-    inline auto_ptr(auto_ptr<Y> &a) throw() : ptr_(a.release()) {}
+    inline auto_ptr(auto_ptr<Y> &a) _MSL_NO_THROW : ptr_(a.release()) {}
 #endif // _MSL_MUST_INLINE_MEMBER_TEMPLATE
 #endif // _MSL_NO_MEMBER_TEMPLATE
-    auto_ptr &operator=(auto_ptr &a) throw();
+    auto_ptr &operator=(auto_ptr &a) _MSL_NO_THROW;
 #ifndef _MSL_NO_MEMBER_TEMPLATE
 #ifndef _MSL_MUST_INLINE_MEMBER_TEMPLATE
-    template <class Y> auto_ptr &operator=(auto_ptr<Y> &a) throw();
+    template <class Y> auto_ptr &operator=(auto_ptr<Y> &a) _MSL_NO_THROW;
 #else
-    template <class Y> inline auto_ptr &operator=(auto_ptr<Y> &a) throw() {
+    template <class Y>
+    inline auto_ptr &operator=(auto_ptr<Y> &a) _MSL_NO_THROW {
         reset(a.release());
         return *this;
     }
@@ -314,53 +321,54 @@ template <class X> class auto_ptr {
     ~auto_ptr() __attribute__((nothrow));
 
     //  lib.auto.ptr.members members:
-    X &operator*() const throw();
-    X *operator->() const throw();
-    X *get() const throw();
-    X *release() throw();
-    void reset(X *p = 0) throw();
+    X &operator*() const _MSL_NO_THROW;
+    X *operator->() const _MSL_NO_THROW;
+    X *get() const _MSL_NO_THROW;
+    X *release() _MSL_NO_THROW;
+    void reset(X *p = 0) _MSL_NO_THROW;
 
     //  lib.auto.ptr.conv conversions:
-    auto_ptr(auto_ptr_ref<X> r) throw();
-    auto_ptr &operator=(auto_ptr_ref<X> r) throw();
+    auto_ptr(auto_ptr_ref<X> r) _MSL_NO_THROW;
+    auto_ptr &operator=(auto_ptr_ref<X> r) _MSL_NO_THROW;
 #if !defined(_MSL_NO_MEMBER_TEMPLATE) && __MWERKS__ >= 0x2400
-    template <class Y> operator auto_ptr_ref<Y>() throw();
-    template <class Y> operator auto_ptr<Y>() throw();
+    template <class Y> operator auto_ptr_ref<Y>() _MSL_NO_THROW;
+    template <class Y> operator auto_ptr<Y>() _MSL_NO_THROW;
 #endif // !defined (_MSL_NO_MEMBER_TEMPLATE) && __MWERKS__ >= 0x2400
   private:
     X *ptr_;
 };
 
-template <class X> inline X *auto_ptr<X>::release() throw() {
+template <class X> inline X *auto_ptr<X>::release() _MSL_NO_THROW {
     X *tmp = ptr_;
     ptr_ = 0;
     return tmp;
 }
 
-template <class X> inline void auto_ptr<X>::reset(X *p) throw() {
+template <class X> inline void auto_ptr<X>::reset(X *p) _MSL_NO_THROW {
     if (ptr_ != p) {
         delete ptr_;
         ptr_ = p;
     }
 }
 
-template <class X> inline auto_ptr<X>::auto_ptr(X *p) throw() : ptr_(p) {}
+template <class X> inline auto_ptr<X>::auto_ptr(X *p) _MSL_NO_THROW : ptr_(p) {}
 
 template <class X>
-inline auto_ptr<X>::auto_ptr(auto_ptr &a) throw() : ptr_(a.release()) {}
+inline auto_ptr<X>::auto_ptr(auto_ptr &a) _MSL_NO_THROW : ptr_(a.release()) {}
 
 #ifndef _MSL_NO_MEMBER_TEMPLATE
 #ifndef _MSL_MUST_INLINE_MEMBER_TEMPLATE
 
 template <class X>
 template <class Y>
-inline auto_ptr<X>::auto_ptr(auto_ptr<Y> &a) throw() : ptr_(a.release()) {}
+inline auto_ptr<X>::auto_ptr(auto_ptr<Y> &a) _MSL_NO_THROW : ptr_(a.release()) {
+}
 
 #endif // _MSL_MUST_INLINE_MEMBER_TEMPLATE
 #endif // _MSL_NO_MEMBER_TEMPLATE
 
 template <class X>
-inline auto_ptr<X> &auto_ptr<X>::operator=(auto_ptr &a) throw() {
+inline auto_ptr<X> &auto_ptr<X>::operator=(auto_ptr &a) _MSL_NO_THROW {
     reset(a.release());
     return *this;
 }
@@ -370,7 +378,7 @@ inline auto_ptr<X> &auto_ptr<X>::operator=(auto_ptr &a) throw() {
 
 template <class X>
 template <class Y>
-inline auto_ptr<X> &auto_ptr<X>::operator=(auto_ptr<Y> &a) throw() {
+inline auto_ptr<X> &auto_ptr<X>::operator=(auto_ptr<Y> &a) _MSL_NO_THROW {
     reset(a.release());
     return *this;
 }
@@ -380,21 +388,23 @@ inline auto_ptr<X> &auto_ptr<X>::operator=(auto_ptr<Y> &a) throw() {
 
 template <class X> inline auto_ptr<X>::~auto_ptr() { delete ptr_; }
 
-template <class X> inline X &auto_ptr<X>::operator*() const throw() {
+template <class X> inline X &auto_ptr<X>::operator*() const _MSL_NO_THROW {
     return *ptr_;
 }
 
-template <class X> inline X *auto_ptr<X>::operator->() const throw() {
+template <class X> inline X *auto_ptr<X>::operator->() const _MSL_NO_THROW {
     return ptr_;
 }
 
-template <class X> inline X *auto_ptr<X>::get() const throw() { return ptr_; }
+template <class X> inline X *auto_ptr<X>::get() const _MSL_NO_THROW {
+    return ptr_;
+}
 
 template <class X>
-inline auto_ptr<X>::auto_ptr(auto_ptr_ref<X> r) throw() : ptr_(r.ptr_) {}
+inline auto_ptr<X>::auto_ptr(auto_ptr_ref<X> r) _MSL_NO_THROW : ptr_(r.ptr_) {}
 
 template <class X>
-inline auto_ptr<X> &auto_ptr<X>::operator=(auto_ptr_ref<X> r) throw() {
+inline auto_ptr<X> &auto_ptr<X>::operator=(auto_ptr_ref<X> r) _MSL_NO_THROW {
     reset(r.ptr_);
     return *this;
 }
@@ -403,7 +413,7 @@ inline auto_ptr<X> &auto_ptr<X>::operator=(auto_ptr_ref<X> r) throw() {
 
 template <class X>
 template <class Y>
-inline auto_ptr<X>::operator auto_ptr_ref<Y>() throw() {
+inline auto_ptr<X>::operator auto_ptr_ref<Y>() _MSL_NO_THROW {
     auto_ptr_ref<Y> r;
     r.ptr_ = release();
     return r;
@@ -411,7 +421,7 @@ inline auto_ptr<X>::operator auto_ptr_ref<Y>() throw() {
 
 template <class X>
 template <class Y>
-inline auto_ptr<X>::operator auto_ptr<Y>() throw() {
+inline auto_ptr<X>::operator auto_ptr<Y>() _MSL_NO_THROW {
     return auto_ptr<Y>(release());
 }
 
@@ -426,49 +436,49 @@ inline auto_ptr<X>::operator auto_ptr<Y>() throw() {
 template <class X> class auto_ptr {
   public:
     typedef X element_type;
-    explicit auto_ptr(X *p = 0) throw();
+    explicit auto_ptr(X *p = 0) _MSL_NO_THROW;
 #ifndef _MSL_NO_MEMBER_TEMPLATE
-    template <class Y> auto_ptr(const auto_ptr<Y> &a) throw();
-    template <class Y> auto_ptr &operator=(const auto_ptr<Y> &a) throw();
+    template <class Y> auto_ptr(const auto_ptr<Y> &a) _MSL_NO_THROW;
+    template <class Y> auto_ptr &operator=(const auto_ptr<Y> &a) _MSL_NO_THROW;
 #endif // _MSL_NO_MEMBER_TEMPLATE
-    auto_ptr(const auto_ptr &a) throw();
-    auto_ptr &operator=(const auto_ptr &a) throw();
+    auto_ptr(const auto_ptr &a) _MSL_NO_THROW;
+    auto_ptr &operator=(const auto_ptr &a) _MSL_NO_THROW;
     ~auto_ptr() __attribute__((nothrow));
-    X &operator*() const throw();
-    X *operator->() const throw();
-    X *get() const throw();
-    X *release() const throw();
-    bool owns() const throw();
+    X &operator*() const _MSL_NO_THROW;
+    X *operator->() const _MSL_NO_THROW;
+    X *get() const _MSL_NO_THROW;
+    X *release() const _MSL_NO_THROW;
+    bool owns() const _MSL_NO_THROW;
 
   private:
     X *ptr_;
     mutable bool owns_;
 };
 
-template <class X> inline bool auto_ptr<X>::owns() const throw() {
+template <class X> inline bool auto_ptr<X>::owns() const _MSL_NO_THROW {
     return owns_;
 }
 
-template <class X> inline X *auto_ptr<X>::release() const throw() {
+template <class X> inline X *auto_ptr<X>::release() const _MSL_NO_THROW {
     owns_ = false;
     return ptr_;
 }
 
 template <class X>
-inline auto_ptr<X>::auto_ptr(X *p) throw() : ptr_(p), owns_(p != 0) {}
+inline auto_ptr<X>::auto_ptr(X *p) _MSL_NO_THROW : ptr_(p), owns_(p != 0) {}
 
 #ifndef _MSL_NO_MEMBER_TEMPLATE
 
 template <class X>
 template <class Y>
-inline auto_ptr<X>::auto_ptr(const auto_ptr<Y> &a) throw() {
+inline auto_ptr<X>::auto_ptr(const auto_ptr<Y> &a) _MSL_NO_THROW {
     owns_ = a.owns();
     ptr_ = a.release();
 }
 
 template <class X>
 template <class Y>
-inline auto_ptr<X> &auto_ptr<X>::operator=(const auto_ptr<Y> &a) throw() {
+inline auto_ptr<X> &auto_ptr<X>::operator=(const auto_ptr<Y> &a) _MSL_NO_THROW {
     if (owns_)
         delete ptr_;
     owns_ = a.owns();
@@ -478,14 +488,15 @@ inline auto_ptr<X> &auto_ptr<X>::operator=(const auto_ptr<Y> &a) throw() {
 
 #endif // _MSL_NO_MEMBER_TEMPLATE
 
-template <class X> inline auto_ptr<X>::auto_ptr(const auto_ptr &a) throw() {
+template <class X>
+inline auto_ptr<X>::auto_ptr(const auto_ptr &a) _MSL_NO_THROW {
     owns_ = a.owns_;
     ptr_ = a.release();
 }
 
 // hh 980923 rewrote op=
 template <class X>
-auto_ptr<X> &auto_ptr<X>::operator=(const auto_ptr &a) throw() {
+auto_ptr<X> &auto_ptr<X>::operator=(const auto_ptr &a) _MSL_NO_THROW {
     if (this == &a)
         return *this;
     if (ptr_ == a.ptr_) {
@@ -505,15 +516,17 @@ template <class X> inline auto_ptr<X>::~auto_ptr() {
         delete ptr_;
 }
 
-template <class X> inline X &auto_ptr<X>::operator*() const throw() {
+template <class X> inline X &auto_ptr<X>::operator*() const _MSL_NO_THROW {
     return *ptr_;
 }
 
-template <class X> inline X *auto_ptr<X>::operator->() const throw() {
+template <class X> inline X *auto_ptr<X>::operator->() const _MSL_NO_THROW {
     return ptr_;
 }
 
-template <class X> inline X *auto_ptr<X>::get() const throw() { return ptr_; }
+template <class X> inline X *auto_ptr<X>::get() const _MSL_NO_THROW {
+    return ptr_;
+}
 
 #endif // _MSL_USE_AUTO_PTR_96
 
@@ -533,7 +546,7 @@ template <class Allocator> class alloc2deleter {
     typedef typename remove_reference<Allocator>::type::pointer pointer;
     typedef typename remove_reference<Allocator>::type::size_type size_type;
     typedef typename ::detail::select<is_reference<Allocator>::value, Allocator,
-                            const Allocator &>::type param;
+                                      const Allocator &>::type param;
 
   public:
     alloc2deleter(param alloc, size_type size) : alloc_(alloc), size_(size) {}
@@ -582,20 +595,19 @@ class move_ptr {
                   nat())
         : ptr_(p) {}
 
-    move_ptr(T *p,
-             typename ::detail::select<is_reference<D>::value, D, const D &>::type d)
+    move_ptr(
+        T *p,
+        typename ::detail::select<is_reference<D>::value, D, const D &>::type d)
         : ptr_(p, d) {}
 
     // enable move from rvalue
 #ifdef _MSL_MOVE
-    move_ptr(T *p, typename remove_reference<D>::type &&d)
-        : ptr_(p, move(d)) {
+    move_ptr(T *p, typename remove_reference<D>::type &&d) : ptr_(p, move(d)) {
         __static_assert(!is_reference<D>::value,
                         "rvalue deleter bound to reference");
     }
 
-    move_ptr(move_ptr &&a)
-        : ptr_(a.release(), forward<D>(a.ptr_.second())) {}
+    move_ptr(move_ptr &&a) : ptr_(a.release(), forward<D>(a.ptr_.second())) {}
 
     template <class U, class E>
     move_ptr(
@@ -716,10 +728,12 @@ template <class T, class D> class move_ptr<T[], D> {
         : ptr_(p) {}
 
     template <class Y>
-    move_ptr(Y p, typename ::detail::select<is_reference<D>::value, D, const D &>::type d,
-             typename restrict_to<is_pointer<Y>::value &&
-                                  is_same<typename remove_pointer<Y>::type,
-                                          T>::value>::type * = 0)
+    move_ptr(
+        Y p,
+        typename ::detail::select<is_reference<D>::value, D, const D &>::type d,
+        typename restrict_to<
+            is_pointer<Y>::value &&
+            is_same<typename remove_pointer<Y>::type, T>::value>::type * = 0)
         : ptr_(p, d) {}
 
     // enable move from rvalue
@@ -734,8 +748,7 @@ template <class T, class D> class move_ptr<T[], D> {
                         "rvalue deleter bound to reference");
     }
 
-    move_ptr(move_ptr &&a)
-        : ptr_(a.release(), forward<D>(a.ptr_.second())) {}
+    move_ptr(move_ptr &&a) : ptr_(a.release(), forward<D>(a.ptr_.second())) {}
 
     move_ptr &operator=(move_ptr &&a) {
         reset(a.release());
@@ -834,10 +847,12 @@ template <class T, class D, size_t N> class move_ptr<T[N], D> {
         : ptr_(p) {}
 
     template <class Y>
-    move_ptr(Y p, typename ::detail::select<is_reference<D>::value, D, const D &>::type d,
-             typename restrict_to<is_pointer<Y>::value &&
-                                  is_same<typename remove_pointer<Y>::type,
-                                          T>::value>::type * = 0)
+    move_ptr(
+        Y p,
+        typename ::detail::select<is_reference<D>::value, D, const D &>::type d,
+        typename restrict_to<
+            is_pointer<Y>::value &&
+            is_same<typename remove_pointer<Y>::type, T>::value>::type * = 0)
         : ptr_(p, d) {}
 
     // enable move from rvalue
@@ -852,8 +867,7 @@ template <class T, class D, size_t N> class move_ptr<T[N], D> {
                         "rvalue deleter bound to reference");
     }
 
-    move_ptr(move_ptr &&a)
-        : ptr_(a.release(), forward<D>(a.ptr_.second())) {}
+    move_ptr(move_ptr &&a) : ptr_(a.release(), forward<D>(a.ptr_.second())) {}
 
     move_ptr &operator=(move_ptr &&a) {
         reset(a.release());
@@ -916,8 +930,7 @@ template <class T, class D, size_t N> move_ptr<T[N], D>::~move_ptr() {
         ptr_.second()(const_cast<non_const_type *>(ptr_.first()), N);
 }
 
-template <class T, class D, size_t N>
-void move_ptr<T[N], D>::reset(T *p) {
+template <class T, class D, size_t N> void move_ptr<T[N], D>::reset(T *p) {
     if (ptr_.first() != p) {
         if (ptr_.first())
             ptr_.second()(const_cast<non_const_type *>(ptr_.first()), N);
@@ -998,7 +1011,7 @@ _MSL_START_TR1_NAMESPACE
 class bad_weak_ptr : public exception {
   public:
     bad_weak_ptr() {}
-    virtual const char *what() const throw() { return "bad_weak_ptr"; }
+    virtual const char *what() const _MSL_NO_THROW { return "bad_weak_ptr"; }
 };
 
 template <class T> class shared_ptr;
@@ -1019,8 +1032,7 @@ class shared_ptr_deleter_common {
 #endif // _MSL_SHARED_PTR_HAS_MUTEX
     void release();
 #if defined(_MSL_SHARED_PTR_HAS_MUTEX) && defined(__POWERPC__)
-    void release_weak(unsigned acquired = 0,
-                                       unsigned released = 0);
+    void release_weak(unsigned acquired = 0, unsigned released = 0);
 #else
     void release_weak();
 #endif
@@ -1084,8 +1096,7 @@ inline void shared_ptr_deleter_common::attach_weak() {
 template <class T, class D = typename std::detail::default_delete<T> >
 class shared_ptr_deleter : public shared_ptr_deleter_common {
     typedef typename remove_bounds<T>::type element_type;
-    typedef
-        typename remove_const<element_type>::type non_const_type;
+    typedef typename remove_const<element_type>::type non_const_type;
 
   public:
     explicit shared_ptr_deleter(element_type *ptr) : p_(ptr) {}
@@ -1138,18 +1149,17 @@ template <class T> class shared_ptr {
     shared_ptr(const shared_ptr &r);
     template <class Y>
     shared_ptr(const shared_ptr<Y> &r,
-               typename restrict_to<is_convertible<
-                   Y *, element_type *>::value>::type * = 0);
+               typename restrict_to<
+                   is_convertible<Y *, element_type *>::value>::type * = 0);
     template <class Y>
     explicit shared_ptr(
         const weak_ptr<Y> &r,
-        typename restrict_to<
-            is_convertible<Y *, element_type *>::value>::type * =
-            0);
+        typename restrict_to<is_convertible<Y *, element_type *>::value>::type
+            * = 0);
     template <class Y> explicit shared_ptr(auto_ptr<Y> &r);
 
     // destructor
-    ~shared_ptr() throw();
+    ~shared_ptr() _MSL_NO_THROW;
 
     // assignment
     shared_ptr &operator=(const shared_ptr &r);
@@ -1218,8 +1228,7 @@ template <class Y, class U>
 void shared_ptr<T>::enable_from_this(const enable_shared_from_this<Y> *p,
                                      U *py) {
     if (py)
-        weak_ptr<Y>(
-            const_cast<typename remove_const<U>::type *>(py), s_)
+        weak_ptr<Y>(const_cast<typename remove_const<U>::type *>(py), s_)
             .swap(const_cast<enable_shared_from_this<Y> *>(p)->__weak_this);
 }
 
@@ -1274,8 +1283,7 @@ template <class T>
 template <class Y>
 inline shared_ptr<T>::shared_ptr(
     const shared_ptr<Y> &r,
-    typename restrict_to<
-        is_convertible<Y *, element_type *>::value>::type *)
+    typename restrict_to<is_convertible<Y *, element_type *>::value>::type *)
     : ptr_(r.ptr_), s_(r.s_) {
     if (s_)
         s_->attach();
@@ -1289,7 +1297,7 @@ shared_ptr<T>::shared_ptr(auto_ptr<Y> &r)
     ptr_ = r.release();
 }
 
-template <class T> shared_ptr<T>::~shared_ptr() throw() {
+template <class T> shared_ptr<T>::~shared_ptr() _MSL_NO_THROW {
     if (s_)
         s_->release();
 }
@@ -1359,8 +1367,7 @@ template <class T> class shared_ptr<T[]> {
         Y p,
         typename restrict_to<
             is_pointer<Y>::value &&
-            is_same<typename remove_pointer<Y>::type,
-                                T>::value>::type * = 0);
+            is_same<typename remove_pointer<Y>::type, T>::value>::type * = 0);
     template <class D> shared_ptr(T *p, D d);
     shared_ptr(const shared_ptr &r);
     explicit shared_ptr(const weak_ptr<T[]> &r);
@@ -1379,8 +1386,7 @@ template <class T> class shared_ptr<T[]> {
 
     // observers
     element_type *get() const { return ptr_; }
-    typename add_reference<element_type>::type
-    operator[](size_t i) const {
+    typename add_reference<element_type>::type operator[](size_t i) const {
         return ptr_[i];
     }
     long use_count() const {
@@ -1436,8 +1442,7 @@ template <class Y>
 shared_ptr<T[]>::shared_ptr(
     Y p, typename restrict_to<
              is_pointer<Y>::value &&
-             is_same<typename remove_pointer<Y>::type,
-                                 T>::value>::type *)
+             is_same<typename remove_pointer<Y>::type, T>::value>::type *)
     : ptr_(p) {
     Metrowerks::move_ptr<T[]> hold(p);
     s_ = new detail::shared_ptr_deleter<T[]>(p);
@@ -1540,8 +1545,7 @@ template <class T> inline void swap(shared_ptr<T> &a, shared_ptr<T> &b) {
 template <class T, class U>
 shared_ptr<T> static_pointer_cast(const shared_ptr<U> &r) {
 #if defined(__MWERKS__) && __MWERKS__ >= 0x4000
-    __static_assert(!is_array<T>::value &&
-                        !is_array<U>::value,
+    __static_assert(!is_array<T>::value && !is_array<U>::value,
                     "static_pointer_cast converting array form of shared_ptr");
 #endif
     return r.s_ ? shared_ptr<T>(
@@ -1554,8 +1558,7 @@ shared_ptr<T> static_pointer_cast(const shared_ptr<U> &r) {
 template <class T, class U>
 shared_ptr<T> const_pointer_cast(const shared_ptr<U> &r) {
 #if defined(__MWERKS__) && __MWERKS__ >= 0x4000
-    __static_assert(is_array<T>::value ==
-                        is_array<U>::value,
+    __static_assert(is_array<T>::value == is_array<U>::value,
                     "const_pointer_cast converting incompatible shared_ptr's");
 #endif
     return r.s_
@@ -1570,8 +1573,7 @@ shared_ptr<T> const_pointer_cast(const shared_ptr<U> &r) {
 template <class T, class U>
 shared_ptr<T> dynamic_pointer_cast(const shared_ptr<U> &r) {
 #if defined(__MWERKS__) && __MWERKS__ >= 0x4000
-    __static_assert(!is_array<T>::value &&
-                        !is_array<U>::value,
+    __static_assert(!is_array<T>::value && !is_array<U>::value,
                     "dynamic_pointer_cast converting array form of shared_ptr");
 #endif
     typename shared_ptr<T>::element_type *p =
@@ -1609,8 +1611,7 @@ template <class T, class U> struct accept {
   public:
     static const bool value =
         is_T_array && is_U_array && is_same<T, U>::value ||
-        !is_T_array && !is_U_array &&
-            is_convertible<U *, T *>::value;
+        !is_T_array && !is_U_array && is_convertible<U *, T *>::value;
 };
 
 } // namespace detail
@@ -1624,12 +1625,10 @@ template <class T> class weak_ptr {
     weak_ptr(const weak_ptr &r);
     template <class Y>
     weak_ptr(const weak_ptr<Y> &r,
-             typename restrict_to<detail::accept<T, Y>::value>::type
-                 * = 0);
+             typename restrict_to<detail::accept<T, Y>::value>::type * = 0);
     template <class Y>
     weak_ptr(const shared_ptr<Y> &r,
-             typename restrict_to<detail::accept<T, Y>::value>::type
-                 * = 0);
+             typename restrict_to<detail::accept<T, Y>::value>::type * = 0);
 
     // destructor
     ~weak_ptr();
@@ -1638,13 +1637,11 @@ template <class T> class weak_ptr {
     weak_ptr &operator=(const weak_ptr &r);
 
     template <class Y>
-    typename restrict_to<detail::accept<T, Y>::value,
-                                     weak_ptr<T> &>::type
+    typename restrict_to<detail::accept<T, Y>::value, weak_ptr<T> &>::type
     operator=(const weak_ptr<Y> &r);
 
     template <class Y>
-    typename restrict_to<detail::accept<T, Y>::value,
-                                     weak_ptr &>::type
+    typename restrict_to<detail::accept<T, Y>::value, weak_ptr &>::type
     operator=(const shared_ptr<Y> &r);
 
     // modifiers
@@ -1680,9 +1677,8 @@ inline weak_ptr<T>::weak_ptr(const weak_ptr &r) : ptr_(r.ptr_), s_(r.s_) {
 
 template <class T>
 template <class Y>
-weak_ptr<T>::weak_ptr(
-    const weak_ptr<Y> &r,
-    typename restrict_to<detail::accept<T, Y>::value>::type *)
+weak_ptr<T>::weak_ptr(const weak_ptr<Y> &r,
+                      typename restrict_to<detail::accept<T, Y>::value>::type *)
     : ptr_(r.ptr_), s_(r.s_) {
     if (s_)
         s_->attach_weak();
@@ -1717,8 +1713,7 @@ template <class T> weak_ptr<T> &weak_ptr<T>::operator=(const weak_ptr &r) {
 
 template <class T>
 template <class Y>
-typename restrict_to<detail::accept<T, Y>::value,
-                                 weak_ptr<T> &>::type
+typename restrict_to<detail::accept<T, Y>::value, weak_ptr<T> &>::type
 weak_ptr<T>::operator=(const weak_ptr<Y> &r) {
     weak_ptr(r).swap(*this);
     return *this;
@@ -1726,8 +1721,7 @@ weak_ptr<T>::operator=(const weak_ptr<Y> &r) {
 
 template <class T>
 template <class Y>
-typename restrict_to<detail::accept<T, Y>::value,
-                                 weak_ptr<T> &>::type
+typename restrict_to<detail::accept<T, Y>::value, weak_ptr<T> &>::type
 weak_ptr<T>::operator=(const shared_ptr<Y> &r) {
     weak_ptr(r).swap(*this);
     return *this;
@@ -1791,8 +1785,7 @@ template <class T>
 template <class Y>
 shared_ptr<T>::shared_ptr(
     const weak_ptr<Y> &r,
-    typename restrict_to<
-        is_convertible<Y *, element_type *>::value>::type *)
+    typename restrict_to<is_convertible<Y *, element_type *>::value>::type *)
     : ptr_(0), s_(0) {
     shared_ptr<T> p = r.lock();
     if (p.use_count() == 0)
