@@ -186,7 +186,6 @@ cflags_base = [
     "-align powerpc",
     "-enum int",
     "-fp hardware",
-    "-Cpp_exceptions off",
     # "-W all",
     "-O4,p",
     "-inline auto",
@@ -194,7 +193,6 @@ cflags_base = [
     '-pragma "warn_notinlined off"',
     "-maxerrors 1",
     "-nosyspath",
-    "-RTTI off",
     "-fp_contract on",
     "-str reuse",
     "-enc SJIS",
@@ -215,13 +213,15 @@ cflags_base = [
 
 # Debug flags
 if args.debug:
-    cflags_base.extend(["-sym dwarf-2", "-DDEBUG=1"])
+    cflags_base.extend(["-sym on", "-DDEBUG=1"])
 else:
     cflags_base.append("-DNDEBUG=1")
 
 # Metrowerks library flags
 cflags_runtime = [
     *cflags_base,
+    "-Cpp_exceptions off",
+    "-RTTI off",
     "-use_lmw_stmw on",
     "-str reuse,pool,readonly",
     "-common off",
@@ -232,6 +232,8 @@ cflags_runtime = [
 # Metrowerks C standard library flags
 cflags_mslc = [
     *cflags_base,
+    "-Cpp_exceptions off",
+    "-RTTI off",
     "-use_lmw_stmw on",
     "-str reuse,pool,readonly",
     "-fp_contract off",
@@ -242,6 +244,8 @@ cflags_mslc = [
 
 # NintendoWare for Revolution (nw4r) flags
 cflags_nw4r = [
+    "-Cpp_exceptions off",
+    "-RTTI off",
     "-i libs/include/MSL",
     "-i libs/include/MSL/internal",
     *cflags_base,
@@ -253,6 +257,8 @@ cflags_nw4r = [
 
 # Revolution Software Development Kit (RVL_SDK) flags
 cflags_rvl = [
+    "-Cpp_exceptions off",
+    "-RTTI off",
     "-i libs/include/MSL",
     "-i libs/include/MSL/internal",
     *cflags_base,
@@ -265,8 +271,6 @@ cflags_game = [
     "-ipa file",
     "-Cpp_exceptions on",
     "-RTTI on",
-    "-sdata 0",
-    "-sdata2 0",
 ]
 
 config.linker_version = "Wii/1.1"
