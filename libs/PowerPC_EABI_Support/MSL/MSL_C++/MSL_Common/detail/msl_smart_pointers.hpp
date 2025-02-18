@@ -9,9 +9,8 @@
 
 #pragma once
 
-#include "Metrowerks/compressed_pair.h"
+#include <Metrowerks/compressed_pair.h>
 #include <MSL_C++/MSL_Common/detail/type_traits.hpp>
-#include <MSL_C++/MSL_Common/type_traits.h>
 
 #define _MSL_NO_THROW throw()
 

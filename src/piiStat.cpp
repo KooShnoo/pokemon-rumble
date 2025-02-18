@@ -35,7 +35,6 @@ const u16 pokemon_index_array[507] = {
 #include <pokemon_index_array.csv>
 };
 
-
 const Pokemon *ks_getPiiStats(u16 param_1, s32 param_2) {
     s32 idx = param_2 + pokemon_index_array[param_1];
     return &pokemon_array[idx];
