@@ -10,7 +10,7 @@
 #include <MSL_C++/memory>
 #include <MSL_C++/stdexcept>
 
-#include "MSL_C++/Metrowerks/compressed_pair.h"
+#include <msl_utility>
 
 #include "macros.h"
 
@@ -134,10 +134,8 @@ namespace std {
 
         void zero() {
             rep_s *buf = &m.first();
-            __static_assert(
-                sizeof(*buf) % sizeof(size_t) == 0,
-                "string buffer size must be word-aligned"
-            );
+            // string buffer size must be word-aligned
+            static_assert(sizeof(*buf) % sizeof(size_t) == 0);
             for (size_t i = sizeof(*buf) / sizeof(size_t); i != 0; i--) {
                 ((size_t *)&buf)[i] = 0;
             }

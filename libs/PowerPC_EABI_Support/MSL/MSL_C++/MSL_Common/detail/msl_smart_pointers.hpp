@@ -9,7 +9,6 @@
 
 #pragma once
 
-#include <Metrowerks/compressed_pair.h>
 #include <MSL_C++/MSL_Common/detail/type_traits.hpp>
 
 #define _MSL_NO_THROW throw()
@@ -133,7 +132,7 @@ template <class Y, class traits> struct auto_ptr_ref {
     Y *ptr_;
 };
 
-template <class X, class traits = _Single<X>> class auto_ptr {
+template <class X, class traits = _Single<X> > class auto_ptr {
   public:
     typedef X element_type;
 
