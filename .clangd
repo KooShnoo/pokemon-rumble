@@ -1,0 +1,5 @@
+Diagnostics:
+  Suppress:
+    - "union_as_base_class"
+    - "template_arg_must_be_expr"
+    - "in_class_initializer_non_constant"

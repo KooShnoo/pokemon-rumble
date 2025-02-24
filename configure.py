@@ -317,6 +317,7 @@ config.libs = [
     Game([
         Object(NonMatching, "piiStat.cpp"),
         Object(NonMatching, "ppu/CPpuEngine.cpp"),
+        Object(NonMatching, "ppu/CEngine.cpp"),
     ]),
     {
         "lib": "Runtime.PPCEABI.H",

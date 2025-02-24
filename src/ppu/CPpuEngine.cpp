@@ -15,7 +15,7 @@ void fn_8005F450() throw();
 static u32 ks_g_ppu_smth = 0;
 static u8 lbl_804B9060 = 0;
 
-std::tr1::shared_ptr<CPpuCode> make_ppuCode(CPpuEnv *ppuEnv,
+std::tr1::shared_ptr<CPpuCode> make_ppuCode(CPpuEnv &ppuEnv,
                                             const char *pkcName, int param_4);
 
 bool CPpuEngine::prepareScript(const char *pkcName, s32 one,
@@ -28,7 +28,7 @@ bool CPpuEngine::prepareScript(const char *pkcName, s32 one,
 
     // make_ppuCode might be a member of CPpuEnv, but this matches better.
     std::tr1::shared_ptr<CPpuCode> ppuCode =
-        make_ppuCode(ppuEnv.get(), pkcName, one);
+        make_ppuCode(*ppuEnv, pkcName, one);
     // pPpuEnv->get()->make_ppuCode(pkcName, one);
 
     if (!ppuCode) {
@@ -36,7 +36,7 @@ bool CPpuEngine::prepareScript(const char *pkcName, s32 one,
     }
 
     this->_90 = ks_g_ppu_smth;
-    this->setupMemory(ppuCode.get(), ppuEnv.get(), 0x40, 0x20, 0x8);
+    this->setupMemory(*ppuCode, *ppuEnv, 0x40, 0x20, 0x8);
 
     return true;
 }

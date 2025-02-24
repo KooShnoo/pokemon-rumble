@@ -8,9 +8,9 @@ class ICalc {
     virtual void Calc();
 };
 
-class CPpuEngine : public std::tr1::enable_shared_from_this<CPpuEngine>,
-                   ICalc,
-                   NPpu::CEngine {
+class CPpuEngine : NPpu::CEngine,
+                   public std::tr1::enable_shared_from_this<CPpuEngine>,
+                   ICalc {
   public: // TODO(KooShnoo): remove
     u32 ks_PC;
     std::tr1::shared_ptr<CPpuEngine> shared;

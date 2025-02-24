@@ -69,8 +69,11 @@ def openScript(filename):
 
         print(dat_block)
         str_pool = str_block.decode('ASCII').split("\x00")
-        dat_slice = dat_size // dat_count
-        dat_pool = [dat_block[x:x+dat_slice] for x in range(0, dat_size, dat_slice)]
+        
+        if dat_count > 0:
+            dat_slice = dat_size // dat_count
+            dat_pool = [dat_block[x:x+dat_slice] for x in range(0, dat_size, dat_slice)]
+        
         pc = 0
 
         infile.seek(0x20)

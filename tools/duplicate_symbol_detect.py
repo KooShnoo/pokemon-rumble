@@ -7,7 +7,8 @@ lmk if you know a better way of importing symbols from ghdira into symbols.txt (
 """
 
 
-import json
+# import json
+import sys
 
 with open("./config/WPSE01_01/symbols.txt") as f:
     symbols = f.readlines()
@@ -22,13 +23,13 @@ for i, line in enumerate(symbols):
     addr = tokens[2].split(':')[-1][:-1]
     
     if symbol_name in symbol_dict:
-        print(f"!!WARNING!! Duplicate symbol `{symbol_name}` found originally at {symbol_dict[symbol_name]}, then again at {addr}")
+        print(f"!!WARNING!! Duplicate symbol `{symbol_name}` found originally at {symbol_dict[symbol_name]}, then again at {addr}", file=sys.stderr)
         dups += 1
 
     symbol_dict[symbol_name] = addr
     
 if dups > 0:
-    print(f"symbols.txt contains {dups} duplicate symbols. these will cause linker errors, remove duplicates.")
+    print(f"symbols.txt contains {dups} duplicate symbols. these will cause linker errors, remove duplicates.", file=sys.stderr)
     exit(1)
 else:
     print(f"no duplicates detected, all OK! :)")

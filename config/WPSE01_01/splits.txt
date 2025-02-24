@@ -23,6 +23,11 @@ src/piiStat.cpp:
 	.text       start:0x80124EE0 end:0x80124F10
 	.rodata     start:0x8035DF88 end:0x803620C0
 
+src/ppu/CEngine.cpp:
+	extab       start:0x80034DD4 end:0x80034E3C
+	extabindex  start:0x8004FE24 end:0x8004FEC0
+	.text       start:0x801704C0 end:0x80173AF0
+
 libs/src/nw4r/g3d/res/g3d_rescommon.cpp:
 	.text       start:0x8024AE80 end:0x8024B030
 
