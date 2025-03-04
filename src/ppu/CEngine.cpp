@@ -16,6 +16,8 @@ static std::map<s32, CPpuCode *> *g_UnkMap3 = nullptr;
 #define SIZEOF_STRUCT_3 4
 namespace NPpu {
 
+s32 CEngine::engine_id_counter = 1;
+
 void CEngine::setupMemory(CPpuCode &ppuCode, CPpuEnv &ppuEnv, s32 size1,
                           s32 size2, s32 size3) {
     if (!g_UnkMap1) {
@@ -72,7 +74,9 @@ void CEngine::setupMemory(CPpuCode &ppuCode, CPpuEnv &ppuEnv, s32 size1,
     memset(this->unknown_pointer3, 0, this->size1 << 2);
     memset(this->unknown_pointer4, 0, this->size2 << 2);
     this->unknown_counter3 = 0;
-    this->_58 = 0;
+    // this->_58 = 0;
 }
+
+void CEngine::setEngineId(s32 id) { engine_id_counter = id; }
 
 } // namespace NPpu

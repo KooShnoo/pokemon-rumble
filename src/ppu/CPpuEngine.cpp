@@ -7,7 +7,6 @@
 
 static std::tr1::weak_ptr<CPpuEnv> gPpuEnv;
 
-void fn_801738C0(u32);
 void fn_8019E770();
 
 void fn_8005F450() throw();
@@ -45,7 +44,7 @@ bool CPpuEngine::execScript(const char *pkcName, s32 one,
                             std::tr1::shared_ptr<CPpuEnv> *env) {
     if (lbl_804B9060 == 0) {
         lbl_804B9060 = 1;
-        fn_801738C0(1000000000);
+        NPpu::CEngine::setEngineId(1000000000);
     }
 
     if (!this->prepareScript(pkcName, one, env)) {
@@ -99,8 +98,7 @@ void CPpuEngine::runScript() throw() {
     return;
 }
 
-u32 ks_doPKC_fun1(std::basic_string<char> &pkcName, s32 one,
-                  std::tr1::shared_ptr<CPpuEnv> *env) {
+u32 ks_doPKC_fun1(char *pkcName, s32 one, std::tr1::shared_ptr<CPpuEnv> *env) {
     std::tr1::shared_ptr<CPpuEngine> engine(new CPpuEngine());
 
     // CPpuEngine *pEngine = new CPpuEngine();
@@ -138,5 +136,5 @@ u32 ks_doPKC_fun1(std::basic_string<char> &pkcName, s32 one,
     // engine->shared =
     // std::tr1::shared_ptr<CPpuEngine>(std::tr1::weak_ptr<CPpuEngine>(engine));
 
-    return engine->execScript(pkcName.c_str(), one, env);
+    return engine->execScript(pkcName, one, env);
 }

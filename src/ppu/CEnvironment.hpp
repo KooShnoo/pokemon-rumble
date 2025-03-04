@@ -5,14 +5,14 @@
 namespace NPpu {
 
 class CEnvironemnt {
-  public:
+public:
     s32 sizeUnkBuffer;
     void *unkBuffer;
     s32 len_functable;
     void *functable;
 
-    // virtual void CEnvironment_vfunc_80170420();
+    virtual void CEnvironment_vfunc_80170420();
 };
-// static_assert(sizeof(CEnvironemnt) == 0x14);
+static_assert(sizeof(CEnvironemnt) == 0x14);
 
 } // namespace NPpu

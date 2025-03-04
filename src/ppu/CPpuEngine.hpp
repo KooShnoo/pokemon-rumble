@@ -2,7 +2,6 @@
 
 #include <MSL_Common/detail/msl_smart_pointers.hpp>
 #include <ppu/CEngine.hpp>
-#include <string>
 
 class ICalc {
     virtual void Calc();
@@ -11,17 +10,21 @@ class ICalc {
 class CPpuEngine : NPpu::CEngine,
                    public std::tr1::enable_shared_from_this<CPpuEngine>,
                    ICalc {
-  public: // TODO(KooShnoo): remove
-    u32 ks_PC;
-    std::tr1::shared_ptr<CPpuEngine> shared;
+    // u32 override_vtable; // TODO: get this to generate
+    u32 _70;
     u32 _74;
+    UNKOWN_DATA(0x74, 0x90, u32);
     u32 _90;
-    u8 _pad1[75];
+    UNKOWN_DATA(0x90, 0xc0, u32);
 
-  public:
+public:
+    virtual void vfunc_thunk_801035C0();
+    virtual void vfunc_thunk_801035b0() {};
+    virtual ~CPpuEngine();
+    virtual void runScript() throw();
+
     CPpuEngine();
 
-    void runScript() throw();
     bool execScript(const char *pkcName, s32 one,
                     std::tr1::shared_ptr<CPpuEnv> *env);
     u32 tickOnce();
@@ -29,7 +32,9 @@ class CPpuEngine : NPpu::CEngine,
     bool prepareScript(const char *pkcName, s32 one,
                        std::tr1::shared_ptr<CPpuEnv> *ppuEnv);
 };
-// static_assert(sizeof(CPpuEngine) == 0xc4)
+// This should actually be 0xc4, but we need to get the vtables to generate
+// correctly first.
+static_assert(sizeof(CPpuEngine) == 0xc0);
+// static_assert(sizeof(CPpuEngine) == 0xc4);
 
-u32 ks_doPKC_fun1(std::basic_string<char> &pkcName, s32 one,
-                  std::tr1::shared_ptr<CPpuEnv> *env);
+u32 ks_doPKC_fun1(char *pkcName, s32 one, std::tr1::shared_ptr<CPpuEnv> *env);

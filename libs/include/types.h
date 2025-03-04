@@ -4,7 +4,6 @@
 #ifdef __cplusplus
 #include <cstdarg>
 #include <cstddef>
-#include <new>
 #else
 #include <stdarg.h>
 #include <stddef.h>
@@ -12,8 +11,6 @@
 
 #include <decomp.h>
 #include <macros.h>
-
-#include <wchar.h>
 
 typedef unsigned long long u64;
 typedef signed long long s64;

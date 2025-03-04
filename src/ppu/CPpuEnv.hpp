@@ -5,11 +5,8 @@
 
 class CPpuEnv : public std::tr1::enable_shared_from_this<CPpuEnv>,
                 NPpu::CEnvironemnt {
-  public:
-    u8 _pad[0x20];
-
-    // std::tr1::shared_ptr<CPpuCode> make_ppuCode(const char *pkcName,
-    //                                             int param_4);
+public:
+    UNKOWN_DATA(0x0, 0x20, u8);
     virtual void CPpuEnv_vfunc_shared_ptr_801054D0();
 };
 static_assert(sizeof(CPpuEnv) == 0x3c);

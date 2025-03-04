@@ -5,7 +5,7 @@
 namespace NPpu {
 
 class CCode {
-  public:
+public:
     char *scriptFileName;
     u32 unk0;
     u32 unk1;
@@ -20,6 +20,6 @@ class CCode {
 
 class CPpuCode : public std::tr1::enable_shared_from_this<CPpuCode>,
                  public NPpu::CCode {
-  public:
+public:
     virtual void CPpuCode_vfunc_80105250();
 };

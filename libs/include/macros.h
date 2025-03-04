@@ -36,6 +36,9 @@
 #define DONT_INLINE __declspec(noinline) // use for regular functions
 #define DONT_INLINE_CLASS __attribute__((never_inline)) // use for class methods
 
+#define UNKOWN_DATA(lastOffset, currentOffset, typeOfLastMember) \
+    u8 __##currentOffset##padding[currentOffset - lastOffset - sizeof(typeOfLastMember)]
+
 // For VSCode
 #ifdef __INTELLISENSE__
 typedef int __vec2x32float__;

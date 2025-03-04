@@ -18,7 +18,7 @@ struct StackValue {
 };
 
 class CEngine {
-  public:
+protected:
     s32 engineId;
     CPpuCode *ppuCode;
     CPpuEnv *ppuEnv;
@@ -37,15 +37,17 @@ class CEngine {
     void *unknown_pointer4;
     u32 unknown_counter3;
     void *unknown_pointer5;
-    u32 _58;
+    UNKOWN_DATA(0x44, 0x64, u32);
 
-  public:
+    static s32 engine_id_counter;
+
+public:
     CEngine();
-    // virtual u32 tickOnce();
-    virtual void runScript() throw();
     void setupMemory(CPpuCode &ppuCode, CPpuEnv &ppuEnv, s32 size1, s32 size2,
                      s32 size3);
+
+    static void setEngineId(s32 id);
 };
-// static_assert(sizeof(CEngine) == 0x58)
+static_assert(sizeof(CEngine) == 0x64)
 
 } // namespace NPpu
