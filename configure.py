@@ -315,7 +315,7 @@ config.warn_missing_config = True
 config.warn_missing_source = False
 config.libs = [
     Game([
-        Object(NonMatching, "piiStat.cpp"),
+        Object(NonMatching, "PiiProp.cpp"),
         Object(NonMatching, "ppu/CPpuEngine.cpp"),
         Object(NonMatching, "ppu/CEngine.cpp"),
     ]),

@@ -19,8 +19,10 @@ src/ppu/CPpuEngine.cpp:
 	.text       start:0x800FE5B0 end:0x80103640
 	.ctors      start:0x803529DC end:0x803529E0
 
-src/piiStat.cpp:
-	.text       start:0x80124EE0 end:0x80124F10
+src/PiiProp.cpp:
+	extab       start:0x8002C230 end:0x8002C248
+	extabindex  start:0x8004C860 end:0x8004C884
+	.text       start:0x80124EE0 end:0x80125160
 	.rodata     start:0x8035DF88 end:0x803620C0
 
 src/ppu/CEngine.cpp:
