@@ -106,18 +106,13 @@ Building
   ```
 
 <!-- TODO(KooShnoo) talk about wiiware and explain the game. maybe add more docs? -->
-- Extract the game's executable: 
-  - Download [encounter/decomp-toolkit](https://github.com/encounter/decomp-toolkit) (dtk) if you haven't already.
-  - Use dtk to extract the game's executable
-  ```sh
-  dtk vfs cp PokémonRumble.wad:0000001.app:nlzss ./orig/WPSE01_01/main.dol
-  ```
+- Copy or symlink your game `.wad` file into orig/WPSE01_01
 
 <!-- TODO(KooShnoo) put this in the build system -->
 - Generate the pokemon csv:
 
   ```sh
-  $ python src/pokemon_index_array_gen.py
+  python src/pokemon_index_array_gen.py
   ```
 
 - Configure:

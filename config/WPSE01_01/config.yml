@@ -1,5 +1,5 @@
 object_base: orig/WPSE01_01
-object: main.dol
+object: 0000001.app:nlzss
 hash: fd9a2c00c97e420a42355e2c27f3dc0ebbd3d8f9
 symbols: config/WPSE01_01/symbols.txt
 splits: config/WPSE01_01/splits.txt
