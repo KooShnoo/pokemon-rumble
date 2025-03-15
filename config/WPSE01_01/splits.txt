@@ -13,6 +13,11 @@ Sections:
 	.sdata2     type:rodata align:32
 	.sbss2      type:bss align:8
 
+src/CPiiPersonalData.cpp:
+	extab       start:0x800250BC end:0x80025130
+	extabindex  start:0x8004A4CC end:0x8004A520
+	.text       start:0x800EC3D0 end:0x800ECAF0
+
 src/ppu/CPpuEngine.cpp:
 	extab       start:0x80026DBC end:0x80027C68
 	extabindex  start:0x8004B18C end:0x8004B3A8

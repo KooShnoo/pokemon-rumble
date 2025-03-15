@@ -1,3 +1,5 @@
 AccessModifierOffset: -4
+AllowShortBlocksOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: true
 IndentWidth: 4
 Standard: c++03

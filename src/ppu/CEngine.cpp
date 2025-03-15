@@ -20,15 +20,9 @@ s32 CEngine::engine_id_counter = 1;
 
 void CEngine::setupMemory(CPpuCode &ppuCode, CPpuEnv &ppuEnv, s32 size1,
                           s32 size2, s32 size3) {
-    if (!g_UnkMap1) {
-        g_UnkMap1 = new std::map<s32, CPpuCode *>;
-    }
-    if (!g_UnkMap2) {
-        g_UnkMap2 = new std::map<s32, CPpuCode *>;
-    }
-    if (!g_UnkMap3) {
-        g_UnkMap3 = new std::map<s32, CPpuCode *>;
-    }
+    if (!g_UnkMap1) { g_UnkMap1 = new std::map<s32, CPpuCode *>; }
+    if (!g_UnkMap2) { g_UnkMap2 = new std::map<s32, CPpuCode *>; }
+    if (!g_UnkMap3) { g_UnkMap3 = new std::map<s32, CPpuCode *>; }
 
     g_UnkMap3->insert(std::make_pair(this->engineId, this->ppuCode));
 

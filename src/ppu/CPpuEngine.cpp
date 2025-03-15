@@ -21,18 +21,14 @@ bool CPpuEngine::prepareScript(const char *pkcName, s32 one,
                                std::tr1::shared_ptr<CPpuEnv> *pPpuEnv) {
     std::tr1::shared_ptr<CPpuEnv> ppuEnv = *pPpuEnv ? *pPpuEnv : gPpuEnv.lock();
 
-    if (!ppuEnv) {
-        return false;
-    }
+    if (!ppuEnv) { return false; }
 
     // make_ppuCode might be a member of CPpuEnv, but this matches better.
     std::tr1::shared_ptr<CPpuCode> ppuCode =
         make_ppuCode(*ppuEnv, pkcName, one);
     // pPpuEnv->get()->make_ppuCode(pkcName, one);
 
-    if (!ppuCode) {
-        return false;
-    }
+    if (!ppuCode) { return false; }
 
     this->_90 = ks_g_ppu_smth;
     this->setupMemory(*ppuCode, *ppuEnv, 0x40, 0x20, 0x8);
@@ -47,9 +43,7 @@ bool CPpuEngine::execScript(const char *pkcName, s32 one,
         NPpu::CEngine::setEngineId(1000000000);
     }
 
-    if (!this->prepareScript(pkcName, one, env)) {
-        return false;
-    }
+    if (!this->prepareScript(pkcName, one, env)) { return false; }
 
     while (true) {
         this->runScript();
@@ -60,9 +54,7 @@ bool CPpuEngine::execScript(const char *pkcName, s32 one,
         case 4:
             return false;
         case 2:
-            if (one == 1) {
-                fn_8019E770();
-            }
+            if (one == 1) { fn_8019E770(); }
             break;
         case 3:
             return true;
@@ -73,9 +65,7 @@ bool CPpuEngine::execScript(const char *pkcName, s32 one,
 }
 
 void CPpuEngine::runScript() throw() {
-    if (this->exec_pkc_return_value == 0) {
-        return;
-    }
+    if (this->exec_pkc_return_value == 0) { return; }
 
     while (1) {
         u32 tickRetVal = this->tickOnce();
@@ -83,16 +73,12 @@ void CPpuEngine::runScript() throw() {
             tickRetVal == 4) {
             continue;
         }
-        if (this->_74 == 0) {
-            return;
-        }
+        if (this->_74 == 0) { return; }
 
         this->fn_800951D0(this->_74);
         std::tr1::shared_ptr<u32> foo(&this->_74);
         s32 iVar2 = this->_74 + 0x14;
-        if (iVar2 != 0) {
-            fn_8005F450();
-        }
+        if (iVar2 != 0) { fn_8005F450(); }
     }
 
     return;

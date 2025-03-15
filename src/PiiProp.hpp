@@ -2,6 +2,14 @@
 
 class PiiProp {
 public:
+    struct Sex {
+        enum {
+            MaleOnly = 0,
+            FemaleOnly = static_cast<u8>(-2),
+            Unknown = static_cast<u8>(-1),
+        };
+    };
+
     /// some data is stored in bitfields for compact storage. c/cpp bitfields
     /// are convenient, but they are mostly implementation-defined. so, we allow
     /// access as 3 uints for more reliabile, consistent behavior.
@@ -44,6 +52,11 @@ public:
     u8 type1();
     u8 type2();
     u8 sexVector();
+
+    bool isMaleOnly() { return sexVector() == PiiProp::Sex::MaleOnly; }
+    bool isFemaleOnly() { return sexVector() == PiiProp::Sex::FemaleOnly; }
+    bool isUnknown() { return sexVector() == PiiProp::Sex::Unknown; }
+
     u8 unk3();
     u8 unk4();
     const char *modelName(u16 sex);
