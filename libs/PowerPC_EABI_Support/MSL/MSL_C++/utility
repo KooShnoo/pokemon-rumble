@@ -1,3 +1,22 @@
+#ifdef _KS_NO_STOLEN_HEADERS
+
+#ifndef _STD_PAIR_H
+#define _STD_PAIR_H
+
+// https://github.com/SwareJonge/mkdd/blob/main/libs/PowerPC_EABI_Support/include/utility
+
+namespace std {
+
+template <typename T1, typename T2> struct pair {
+    T1 first;
+    T2 second;
+};
+
+} // namespace std
+
+#endif
+#else
+
 
 /* MSL
  * Copyright � 1995-2006 Freescale Corporation.  All rights reserved.
@@ -617,3 +636,5 @@ struct has_nothrow_constructor< ::std::pair<T1, T2> > {
 // hh 030421 Added std::tr1::nat (not official)
 // hh 030527 Made pair pseudo movable
 // hh 031204 Made pair swap-aware
+
+#endif

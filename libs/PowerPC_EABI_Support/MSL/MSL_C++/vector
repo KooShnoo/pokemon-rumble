@@ -1,12 +1,14 @@
 #ifndef _STD_VECTOR
 #define _STD_VECTOR
 
+#define _KS_NO_STOLEN_HEADERS
+
 #include <MSL_C++/algorithm>
 #include <MSL_C++/cstddef>
 #include <MSL_C++/memory>
+#include <MSL_C++/Metrowerks/compressed_pair.h>
 #include <MSL_C++/stdexcept>
 
-#include <MSL_C++/Metrowerks/compressed_pair.h>
 
 namespace std {
 

@@ -1,5 +1,6 @@
-# these are the ranges of valid pokemon indices. the gaps indicate values not preseent in the pokemon index array.
-# don't ask me what the pokemon index array is for, i dont know yet.
+# TODO(KooShnoo): document. rename. cleanup. this file actually generates an array mapping dexnumbers 
+# to indices into the array of PiiProp (pokemon properties). the gaps represent pokemon with alternate forms,
+# who have separete PiiProp properties for each form.
 valid_ranges = [
     [000, 200],
     [228, 377],
