@@ -1,3 +1,4 @@
+import os
 # TODO(KooShnoo): document. rename. cleanup. this file actually generates an array mapping dexnumbers 
 # to indices into the array of PiiProp (pokemon properties). the gaps represent pokemon with alternate forms,
 # who have separete PiiProp properties for each form.
@@ -26,5 +27,6 @@ pokemon_index_array = [
 
 header_csv = ','.join([f"{x}" for x in pokemon_index_array])
 
-with open("build/WPSE01_01/include/pokemon_index_array.csv", "w") as f:
+os.makedirs("build/WPSE01_01/include", exist_ok=True)
+with open("build/WPSE01_01/include/pokemon_index_array.csv", "w+") as f:
     f.write(header_csv)
