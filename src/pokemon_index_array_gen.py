@@ -1,32 +1,36 @@
-import os
-# TODO(KooShnoo): document. rename. cleanup. this file actually generates an array mapping dexnumbers 
-# to indices into the array of PiiProp (pokemon properties). the gaps represent pokemon with alternate forms,
-# who have separete PiiProp properties for each form.
-valid_ranges = [
-    [000, 200],
-    [228, 377],
-    [381, 415],
-    [419, 444],
-    [447, 447],
-    [450, 457],
-    [459, 459],
-    [461, 461],
-    [463, 518],
-    [524, 531],
-    [533, 537],
-    [539, 539],
-    [557, 557],
-    [559, 559],
-]
+# this file generates an array mapping pokedex numbers to indices into the array of all PiiProp (pokemon properties).
+# this is necessary to account for the extra PiiProp entries for alternate pokemon forms.
 
-pokemon_index_array = [
-    num 
-    for (start, end) in valid_ranges 
-    for num in range(start, end + 1)
-]
+POKEDEX_LENGTH = 496
+
+# Maps a dex number to the number of alternate forms (for pokemon with multiple forms).
+alternate_form_counts = {
+    201:27, # Unown
+    351:3,  # Castform
+    386:3,  # Deoxys
+    412:2,  # Burmy
+    413:2,  # Wormadam
+    421:1,  # Cherrim
+    422:1,  # Shellos
+    423:1,  # Gastrodon
+    492:1,  # Shaymin
+    479:5,  # Rotom
+    487:1,  # Giratina
+    493:17, # Arceus
+    494:1,  # Egg
+}
+
+pokemon_index_array = [0]
+skipped_forms = 0
+for dex_index in range(0, POKEDEX_LENGTH - 1):
+    pokemon_index_array.append(dex_index + skipped_forms)
+    
+    dex_no = dex_index + 1
+    alternate_form_count = alternate_form_counts.get(dex_no) or 0
+    skipped_forms += alternate_form_count
 
 header_csv = ','.join([f"{x}" for x in pokemon_index_array])
 
-os.makedirs("build/WPSE01_01/include", exist_ok=True)
-with open("build/WPSE01_01/include/pokemon_index_array.csv", "w+") as f:
+with open("build/WPSE01_01/include/pprNo.csv", "w+") as f:
     f.write(header_csv)
+    

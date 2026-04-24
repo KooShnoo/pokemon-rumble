@@ -42,6 +42,10 @@ typedef void (*OSErrorHandler)(u8 error, OSContext* ctx, u32 dsisr, u32 dar,
 extern OSErrorHandler __OSErrorTable[OS_ERR_MAX];
 extern u32 __OSFpscrEnableBits;
 
+#ifdef __clang__
+// __attribute__(__format__(printf, 1, 2))
+[[gnu::format(printf, 1, 2)]]
+#endif
 DECL_WEAK void OSReport(const char* msg, ...);
 DECL_WEAK void OSPanic(const char* file, int line, const char* msg, ...);
 

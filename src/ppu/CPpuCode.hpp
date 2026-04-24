@@ -1,3 +1,5 @@
+#pragma once
+
 #include "types.h"
 #include <MSL_Common/detail/msl_smart_pointers.hpp>
 #include <memory>

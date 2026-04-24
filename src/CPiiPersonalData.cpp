@@ -33,7 +33,7 @@ CPiiPersonalData::CPiiPersonalData(u32 counter, u32 trainerId, PiiProp &ppr,
     m_attackPower = 1;
     m_defencePower = 1;
     m_speed = 1;
-    m_BP = 1;
+    m_battlePower = 1;
     m_cappedLevel = 0;
     m_hp = 1;
     m_damage = 0;
@@ -147,7 +147,9 @@ void CPiiPersonalData::setBonusSpeed(u32 bonusSpeed) {
     m_bonusSpeed = bonusSpeed;
 }
 
-void CPiiPersonalData::setBP(u32 BP) { m_BP = BP; }
+void CPiiPersonalData::setBattlePower(u32 battlePower) {
+    m_battlePower = battlePower;
+}
 
 void CPiiPersonalData::setGroupNo(u32 groupNo) { m_groupNo = groupNo; }
 

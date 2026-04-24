@@ -9,6 +9,22 @@
 #define static_assert(cond)
 #endif
 
+// For VSCode
+#ifdef DECOMP_IDE_FLAG
+typedef int __vec2x32float__;
+#define AT_ADDRESS(xyz)
+#define ARR_AT_ADDRESS(xyz) = {}
+#define asm
+#define __attribute__(x)
+#define __declspec(x)
+#else
+#define ARR_AT_ADDRESS(xyz) AT_ADDRESS(xyz)
+#define AT_ADDRESS(xyz) : (xyz)
+#endif
+
+#endif
+
+
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
@@ -38,18 +54,3 @@
 
 #define UNKOWN_DATA(lastOffset, currentOffset, typeOfLastMember) \
     u8 __##currentOffset##padding[currentOffset - lastOffset - sizeof(typeOfLastMember)]
-
-// For VSCode
-#ifdef __INTELLISENSE__
-typedef int __vec2x32float__;
-#define AT_ADDRESS(xyz)
-#define ARR_AT_ADDRESS(xyz) = {}
-#define asm
-#define __attribute__(x)
-#define __declspec(x)
-#else
-#define ARR_AT_ADDRESS(xyz) AT_ADDRESS(xyz)
-#define AT_ADDRESS(xyz) : (xyz)
-#endif
-
-#endif

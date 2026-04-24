@@ -142,12 +142,12 @@ if not config.non_matching:
     config.asm_dir = None
 
 # Tool versions
-config.binutils_tag = "2.42-1"
-config.compilers_tag = "20240706"
-config.dtk_tag = "v1.4.1"
-config.objdiff_tag = "v2.7.1"
-config.sjiswrap_tag = "v1.2.0"
-config.wibo_tag = "0.6.11"
+config.binutils_tag = "2.42-2"
+config.compilers_tag = "20251118"
+config.dtk_tag = "v1.8.3"
+config.objdiff_tag = "v3.6.1"
+config.sjiswrap_tag = "v1.2.2"
+config.wibo_tag = "1.0.3"
 
 # Project
 config.config_path = Path("config") / config.version / "config.yml"
@@ -314,12 +314,14 @@ def MatchingFor(*versions):
 config.warn_missing_config = True
 config.warn_missing_source = False
 config.libs = [
-    Game([
-        Object(NonMatching, "CPiiPersonalData.cpp"),
-        Object(NonMatching, "PiiProp.cpp"),
-        Object(NonMatching, "ppu/CPpuEngine.cpp"),
-        Object(NonMatching, "ppu/CEngine.cpp"),
-    ]),
+    Game(
+        [
+            Object(NonMatching, "CPiiPersonalData.cpp"),
+            Object(NonMatching, "PiiProp.cpp"),
+            Object(NonMatching, "ppu/CPpuEngine.cpp"),
+            Object(NonMatching, "ppu/CEngine.cpp"),
+        ]
+    ),
     {
         "lib": "Runtime.PPCEABI.H",
         "mw_version": "Wii/1.1",
@@ -648,7 +650,7 @@ config.libs = [
             Object(NonMatching, "nw4r/g3d/g3d_fog.cpp"),
             Object(NonMatching, "nw4r/g3d/g3d_light.cpp"),
             Object(NonMatching, "nw4r/g3d/g3d_calcvtx.cpp"),
-        ]
+        ],
     },
 ]
 
@@ -661,8 +663,23 @@ config.progress_categories = [
 ]
 config.progress_each_module = args.verbose
 
-# TODO(KooShnoo) use config.extra_clang_flags to define `__INTELLISENSE__`,
-# use config.custom_build_rules to build that cursed csv file
+config.extra_clang_flags = ["-DDECOMP_IDE_FLAG", "__INTELLISENSE__"]
+config.custom_build_rules = [
+    {
+        "name": "python",
+        "command": "$python $in",
+        "description": "SCRIPT $out",
+    }
+]
+config.custom_build_steps = {
+    "pre-compile": [
+        {
+            "outputs": "build/WPSE01_01/include/pprNo.csv",
+            "rule": "python",
+            "inputs": "src/pokemon_index_array_gen.py",
+        },
+    ]
+}
 
 if args.mode == "configure":
     # Write build.ninja and objdiff.json

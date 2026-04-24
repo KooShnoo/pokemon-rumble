@@ -1,3 +1,5 @@
+#pragma once
+
 #include <MSL_Common/detail/msl_smart_pointers.hpp>
 #include <PiiProp.hpp>
 
@@ -34,7 +36,7 @@ class CPiiPersonalData : std::tr1::enable_shared_from_this<CPiiPersonalData> {
     u32 m_attackPower;
     u32 m_defencePower;
     u32 m_speed;
-    u32 m_BP;
+    u32 m_battlePower;
     u32 m_cappedLevel;
     s32 m_hp;
     u32 m_damage;
@@ -67,7 +69,7 @@ class CPiiPersonalData : std::tr1::enable_shared_from_this<CPiiPersonalData> {
     void setBonusDefencePower(u32 bonusDefencePower);
     void setSpeed(u32 speed);
     void setBonusSpeed(u32 bonusSpeed);
-    void setBP(u32 BP);
+    void setBattlePower(u32 BP);
     void setGroupNo(u32 groupNo);
     void setTrait(u32 trait);
     void setBossFlag(bool enable);
