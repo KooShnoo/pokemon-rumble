@@ -1,5 +1,6 @@
 # this file generates an array mapping pokedex numbers to indices into the array of all PiiProp (pokemon properties).
 # this is necessary to account for the extra PiiProp entries for alternate pokemon forms.
+import os
 
 POKEDEX_LENGTH = 496
 
@@ -31,6 +32,6 @@ for dex_index in range(0, POKEDEX_LENGTH - 1):
 
 header_csv = ','.join([f"{x}" for x in pokemon_index_array])
 
+os.makedirs("build/WPSE01_01/include", exist_ok=True)
 with open("build/WPSE01_01/include/pprNo.csv", "w+") as f:
     f.write(header_csv)
-    
