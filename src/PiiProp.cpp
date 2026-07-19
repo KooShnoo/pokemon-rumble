@@ -1,5 +1,7 @@
 #include <PiiDex.hpp>
 #include <PiiProp.hpp>
+extern u16* getLocalizedName(u32 stringId, u16* param_2);
+extern u16 lbl_804B5C48;
 
 bool isMonsNoValid(u16 monsNo) { return 1 <= monsNo && monsNo <= 495; }
 
@@ -39,9 +41,7 @@ u8 PiiProp::formNo() const { return m_bitf.formNo; }
 u8 PiiProp::boneType() const { return m_bitf.boneType; }
 u8 PiiProp::flyHeight() const { return m_bitf.flyHeight; }
 u8 PiiProp::ASize() const { return m_bitf.ASize; }
-f64 PiiProp::unk1() const {
-    return m_bitf.unk1 == 100 ? 1.0f : m_bitf.unk1 * 0.01f;
-}
+f64 PiiProp::unk1() const { return m_bitf.unk1 == 100 ? 1.0f : m_bitf.unk1 * 0.01f; }
 f64 PiiProp::unk2() const { return m_bitf.unk2 * 0.01f; }
 u8 PiiProp::type1() const { return m_bitf.type1; }
 u8 PiiProp::type2() const { return m_bitf.type2; }
@@ -63,18 +63,33 @@ const char *PiiProp::modelName(u16 sex) const { return m_modelName[sex & 1]; }
 f32 PiiProp::walkSpeedCoeff() const { return m_walkSpeedCoeff; }
 f32 PiiProp::walkAnmRate() const { return m_walkAnmRate; }
 
-// static const u8 unknownTable[6][5] = {{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0},
-//                                       {0, 0, 1, 2, 3}, {0, 0, 2, 3, 4},
-//                                       {0, 0, 3, 4, 5}, {0, 0, 0, 0, 0}};
+u16* PiiProp::getPiiName() {
+    return getLocalizedName(m_bitf.monsNo + 0x30000 - 0x1, &lbl_804B5C48);
+}
 
-s32 getTypeOnTypeEfficacy(s32 attackType, s32 defenderType);
-u8 unknownTable[6][5];
+static const u8 unknownTable[6][5] = {
+    {0, 0, 0, 0, 0}, 
+    {0, 0, 0, 0, 0},
+    {0, 0, 1, 2, 3}, // not very effective lane
+    {0, 0, 2, 3, 4}, // effective lane
+    {0, 0, 3, 4, 5}, // super effective lane
+    {0, 0, 0, 0, 0}
+};
+
+static const s8 typeChart[18][18] = {
+#include <typeChart.inc>
+};
+
 s8 PiiProp::attackEfficacy(s32 attackType) const {
-    s32 efficacy1 = m_bitf.type1 == m_bitf.type2
-                        ? 3
-                        : getTypeOnTypeEfficacy(attackType, m_bitf.type2);
-    s32 efficacy2 = getTypeOnTypeEfficacy(attackType, m_bitf.type1);
+    s32 type1 = PiiProp::type1();
+    s32 type2 = PiiProp::type2();
+    s32 efficacy1 = type1 == type2 ? 3 : getTypeOnTypeEfficacy(attackType, type2);
+    s32 efficacy2 = getTypeOnTypeEfficacy(attackType, type1);
     return unknownTable[efficacy1][efficacy2];
+}
+
+s32 getTypeOnTypeEfficacy(s32 attackType, s32 defenderType) {
+    return typeChart[attackType][defenderType];
 }
 
 #include <PiiPropAll.cpp>

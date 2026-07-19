@@ -265,6 +265,7 @@ y);
 // #include <mslconfig>
 #include <functional>
 #include <tree>
+#include "MSL_C++/MSL_Common/detail/type_traits.hpp"
 
 #ifndef RC_INVOKED
 

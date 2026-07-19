@@ -3,6 +3,9 @@
 #include <revolution/OS/OSTime.h>
 void fn_801119B0(std::tr1::shared_ptr<s32> &);
 u32 rand_fn_8019DFC0();
+extern s32 gMinHP;
+extern u16 lbl_804B5C48;
+u16* getLocalizedName(u32 nameId, u16* param_2);
 
 s32 calculateSexForSpecies(PiiProp &ppr, s32 sex) {
     if (ppr.isMaleOnly()) { return PiiSex::Male; }
@@ -47,6 +50,21 @@ CPiiPersonalData::CPiiPersonalData(u32 counter, u32 trainerId, PiiProp &ppr,
 
 void CPiiPersonalData::setTrainerId(u32 trainerId) { m_trainerId = trainerId; }
 
+u32 CPiiPersonalData::getPiiStatus() {
+    if (m_hp <= 0) {
+        return 1;
+    }
+    if (isShiny()) {
+        return 3;
+    }
+    u32 result = 0;
+
+    if (m_trait != 0) {
+        result = 2;
+    }
+    return result;
+}
+
 void CPiiPersonalData::setId(u32 piiId) { m_piiId = piiId; }
 
 void CPiiPersonalData::randomizeId() { m_piiId = rand_fn_8019DFC0(); }
@@ -81,20 +99,32 @@ void CPiiPersonalData::setMoveId(u32 moveNo, u32 moveId) {
 
 u32 CPiiPersonalData::getMoveId(u32 moveNo) { return m_moveIds[moveNo]; }
 
-void CPiiPersonalData::setHP(u32 new_hp) {
-    if (m_hp > new_hp) {
-        m_damage += m_hp - new_hp;
+void CPiiPersonalData::setHP(s32 new_hp) {
+    if (new_hp < m_hp) {
+        m_damage += new_hp - m_hp;
     } else if (m_hp < new_hp) {
-        m_heal += m_hp - new_hp;
+        m_heal += new_hp - m_hp;
     }
 
-    if (new_hp > m_maxHP) {
-        m_hp = m_maxHP;
+    s32* hp = (m_maxHP < new_hp) ? &m_maxHP : &new_hp;
+    
+    hp = (gMinHP < *hp) ? hp : &gMinHP;
+    
+    m_hp = *hp;
+}
+
+f32 CPiiPersonalData::getHpPercent() {
+    f32 hpPercent;
+    
+    if (m_hp == m_maxHP) {
+        hpPercent = 1.0f;
+    } else if (m_hp == 0) {
+        hpPercent = 0.0f;
     } else {
-        m_hp = new_hp;
+        hpPercent = ((f32)m_hp) / ((f32)m_maxHP);
     }
-
-    // maybe some fancy max macro???
+    
+    return hpPercent;
 }
 
 void CPiiPersonalData::resetDamage() { m_damage = 0; }
@@ -107,19 +137,23 @@ void CPiiPersonalData::fillUpHP() {
     resetHeal();
 }
 
-void CPiiPersonalData::setMaxHP(u32 maxHP) {
+void CPiiPersonalData::setMaxHP(s32 maxHP) {
     m_maxHP = maxHP;
     resetDamage();
     resetHeal();
-    // if (m_hp > maxHP) m_hp = maxHP;
-    m_hp = m_hp > m_maxHP ? m_maxHP : m_hp;
+    // if (m_hp > maxHP) hp = maxHP;
+    s32* hpResult = m_maxHP < m_hp ? &m_maxHP : &m_hp;
+    m_hp = *hpResult;
 }
 
 void CPiiPersonalData::setBonusMaxHP(u32 bonusMaxHP) {
     m_bonusMaxHP = bonusMaxHP;
 }
 
-void CPiiPersonalData::setLevel(u32 level) { m_level = level; }
+void CPiiPersonalData::setLevel(u32 level) { 
+    m_level = level;
+    m_cappedLevel = level;
+}
 
 void CPiiPersonalData::setCappedLevel(u32 cappedLevel) {
     m_cappedLevel = cappedLevel;
@@ -147,7 +181,7 @@ void CPiiPersonalData::setBonusSpeed(u32 bonusSpeed) {
     m_bonusSpeed = bonusSpeed;
 }
 
-void CPiiPersonalData::setBattlePower(u32 battlePower) {
+void CPiiPersonalData::setBattlePower(u32 battlePower) { 
     m_battlePower = battlePower;
 }
 
@@ -155,14 +189,31 @@ void CPiiPersonalData::setGroupNo(u32 groupNo) { m_groupNo = groupNo; }
 
 void CPiiPersonalData::setTrait(u32 trait) { m_trait = trait; }
 
-#define BITFLAG_SET(bitflag, mask) (bitflag |= mask)
-#define BITFLAG_CLEAR(bitflag, mask) (bitflag &= ~mask)
-const u32 BOSS_FLAG = 0x80000000;
+u16* CPiiPersonalData::getTraitName() {
+    return getLocalizedName(m_trait + 0x6001D, &lbl_804B5C48);
+}
+
 void CPiiPersonalData::setBossFlag(bool enable) {
     if (enable) {
         BITFLAG_SET(m_flags, BOSS_FLAG);
     } else {
         BITFLAG_CLEAR(m_flags, BOSS_FLAG);
+    }
+}
+
+void CPiiPersonalData::setFavoriteFlag(bool enable) {
+    if (enable) {
+        BITFLAG_SET(m_flags, FAVORITE_FLAG);
+    } else {
+        BITFLAG_CLEAR(m_flags, FAVORITE_FLAG);
+    }
+}
+
+void CPiiPersonalData::setReleaseFlag(bool enable) {
+    if (enable) {
+        BITFLAG_SET(m_flags, RELEASE_FLAG);
+    } else {
+        BITFLAG_CLEAR(m_flags, RELEASE_FLAG);
     }
 }
 

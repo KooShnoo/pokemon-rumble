@@ -234,12 +234,17 @@ reverse_byte_loop_3:
 /* clang-format on */
 
 void __fill_mem(void *dest, int ch, size_t count) {
+    u8 *byteDest;
+    size_t alignDist;
+    u32 *alignDest;
+    size_t alignCount;
+
     ch &= 0xFF;
-    u8 *byteDest = (u8 *)dest - 1;
+    byteDest = (u8 *)dest - 1;
 
     if (count >= 32) {
         /* Align to 4-byte boundary */
-        size_t alignDist = ~(size_t)byteDest & 3;
+        alignDist = ~(size_t)byteDest & 3;
         if (alignDist != 0) {
             count -= alignDist;
             while (alignDist--, *++byteDest = ch, alignDist);
@@ -251,8 +256,8 @@ void __fill_mem(void *dest, int ch, size_t count) {
         }
 
         /* Copy 4 bytes at a time, first in chunks of 32 bytes */
-        uint *alignDest = (uint *)(byteDest - 3);
-        size_t alignCount = count / 32;
+        alignDest = (u32 *)(byteDest - 3);
+        alignCount = count / 32;
         if (alignCount != 0) {
             do {
                 alignDest[1] = ch;

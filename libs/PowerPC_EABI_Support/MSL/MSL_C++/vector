@@ -199,6 +199,8 @@ namespace std {
 
         pointer data() { return this->m_Ptr; }
         const_pointer data() const { return this->m_Ptr; }
+        reference operator[](size_type n) { return this->m_Ptr[n]; }
+        const_reference operator[](size_type n) const { return this->m_Ptr[n]; }
 
         size_type size() const { return this->m_Count; }
         size_type capacity() const { return this->m_Capacity.first(); }

@@ -944,7 +944,7 @@ __tree_deleter<T, Compare, Allocator>::insert_node_at(node_pointer p,
 {
     if (size() == max_size())
         throw length_error("tree::insert length error");
-    Metrowerks::alloc_ptr<node, node_allocator_type &> ap(
+        Metrowerks::alloc_ptr<node, node_allocator_type, Metrowerks::number<size_t, 1> > ap(
         node_alloc().allocate(1), node_alloc());
 #ifdef _MSL_MOVE
     alloc().construct(&ap->data_, ::std::forward<V>(x));

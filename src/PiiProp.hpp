@@ -2,6 +2,14 @@
 
 #include <types.h>
 
+enum TypeEfficacy {
+    TYPE_NO_EFFECT = 0,
+    TYPE_UNKNOWN = 1,
+    TYPE_NOT_VERY_EFFECTIVE = 2,
+    TYPE_EFFECTIVE = 3,
+    TYPE_SUPPER_EFFECTIVE = 4,
+};
+
 class PiiProp {
 public:
     struct Sex {
@@ -59,10 +67,8 @@ public:
     u8 sexVector() const;
 
     bool isMaleOnly() const { return sexVector() == PiiProp::Sex::MaleOnly; }
-    bool isFemaleOnly() const {
-        return sexVector() == PiiProp::Sex::FemaleOnly;
-    }
-    bool isUnknown() const { return sexVector() == PiiProp::Sex::Unknown; }
+    bool isFemaleOnly() const { return sexVector() == PiiProp::Sex::FemaleOnly; }
+    bool isUnknown() const  { return sexVector() == PiiProp::Sex::Unknown; }
 
     u8 unk3() const;
     u8 unk4() const;
@@ -71,8 +77,10 @@ public:
     // const char *name_female() const;
     f32 walkSpeedCoeff() const;
     f32 walkAnmRate() const;
+    u16* getPiiName();
 
     s8 attackEfficacy(s32 attackType) const;
+    static s32 getTypeOnTypeEfficacy(s32 attackType, s32 defenderType);
 
     static const PiiProp *get(u16 dex_number, s32 form_number);
 };

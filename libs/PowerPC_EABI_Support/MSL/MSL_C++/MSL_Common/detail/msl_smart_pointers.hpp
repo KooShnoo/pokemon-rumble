@@ -1172,7 +1172,7 @@ template <class T> class shared_ptr {
 
     // observers
     element_type *get() const { return ptr_; }
-    typename add_reference<element_type>::type operator*() const {
+    typename Metrowerks::add_reference<element_type>::type operator*() const {
         return *ptr_;
     }
     element_type *operator->() const { return ptr_; }
@@ -1384,7 +1384,7 @@ template <class T> class shared_ptr<T[]> {
 
     // observers
     element_type *get() const { return ptr_; }
-    typename add_reference<element_type>::type operator[](size_t i) const {
+    typename Metrowerks::add_reference<element_type>::type operator[](size_t i) const {
         return ptr_[i];
     }
     long use_count() const {
@@ -1741,42 +1741,22 @@ template <class T> inline void weak_ptr<T>::swap(weak_ptr &r) {
 template <class T> void weak_ptr<T>::reset() { weak_ptr().swap(*this); }
 
 template <class T> shared_ptr<T> weak_ptr<T>::lock() const {
-#ifdef _MSL_SHARED_PTR_HAS_MUTEX
-    if (s_ == 0)
+    bool expired = true;
+    if (s_ != 0 && s_->use_count_ != 0) {
+        expired = false;
+    }
+    if (expired) {
         return shared_ptr<T>();
+    }
     shared_ptr<T> r;
-#ifndef __POWERPC__
-    {
-        Metrowerks::mutex::scoped_lock lock(s_->mut_);
-        if (s_->use_count() != 0) {
-            r.ptr_ = ptr_;
-            r.s_ = s_;
-            r.s_->attach(false);
-        }
-    }
-#else  // __POWERPC__
-    register ptrdiff_t *const p = &s_->use_count_;
-    register ptrdiff_t a;
-    asm
-    {
-	loop:
-		lwarx    a, 0, p
-    }
-    if (a != 0) {
-        asm
-            {
-			addi     a, a, 1
-			stwcx.   a, 0, p
-			bne-     loop
-            }
+
+    if (s_->use_count() != 0) {
         r.ptr_ = ptr_;
         r.s_ = s_;
+        r.s_->attach();
     }
-#endif // __POWERPC__
+
     return r;
-#else // _MSL_SHARED_PTR_HAS_MUTEX
-    return expired() ? shared_ptr<T>() : shared_ptr<T>(*this);
-#endif
 }
 
 template <class T>

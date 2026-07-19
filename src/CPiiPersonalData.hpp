@@ -3,6 +3,9 @@
 #include <MSL_Common/detail/msl_smart_pointers.hpp>
 #include <PiiProp.hpp>
 
+#define BITFLAG_SET(bitflag, mask) (bitflag |= mask)
+#define BITFLAG_CLEAR(bitflag, mask) (bitflag &= ~mask)
+
 namespace PiiSex {
 enum {
     Male = 0,
@@ -11,7 +14,17 @@ enum {
 };
 }
 
+enum PiiFlags {
+    BOSS_FLAG = 0x80000000,
+    FAVORITE_FLAG = 0x00000002,
+    RELEASE_FLAG = 0x00100000,
+    NEW_FLAG = 0x00040000,
+    UNK_FLAG1 = 0x00010000,
+    UNK_FLAG2 = 0x00020000,
+};
+
 class CPiiPersonalData : std::tr1::enable_shared_from_this<CPiiPersonalData> {
+public:
     u32 m_flags;
     u32 m_unkownCounter;
     PiiProp *m_piiProp;
@@ -32,7 +45,7 @@ class CPiiPersonalData : std::tr1::enable_shared_from_this<CPiiPersonalData> {
     /// in the code this is called the `oyaID`
     u32 m_trainerId;
     std::tr1::shared_ptr<s32> m_unknown;
-    u32 m_maxHP;
+    s32 m_maxHP;
     u32 m_attackPower;
     u32 m_defencePower;
     u32 m_speed;
@@ -45,6 +58,7 @@ class CPiiPersonalData : std::tr1::enable_shared_from_this<CPiiPersonalData> {
     u32 m_groupNo;
 
     CPiiPersonalData(u32 counter, u32 trainerId, PiiProp &ppr, s32 sex);
+    u32 getPiiStatus();
     void setTrainerId(u32 trainerId);
     void setId(u32 piiId);
     void randomizeId();
@@ -54,12 +68,13 @@ class CPiiPersonalData : std::tr1::enable_shared_from_this<CPiiPersonalData> {
     void setTime(u32 time);
     void setMoveId(u32 moveNo, u32 moveId);
     u32 getMoveId(u32 moveNo);
-    void setHP(u32 hp);
+    void setHP(s32 new_hp);
     // hpbar_fill_pct
+    f32 getHpPercent();
     void resetDamage();
     void resetHeal();
     void fillUpHP();
-    void setMaxHP(u32 maxHP);
+    void setMaxHP(s32 maxHP);
     void setBonusMaxHP(u32 bonusMaxHP);
     void setLevel(u32 level);
     void setCappedLevel(u32 cappedLevel);
@@ -69,10 +84,13 @@ class CPiiPersonalData : std::tr1::enable_shared_from_this<CPiiPersonalData> {
     void setBonusDefencePower(u32 bonusDefencePower);
     void setSpeed(u32 speed);
     void setBonusSpeed(u32 bonusSpeed);
-    void setBattlePower(u32 BP);
+    void setBattlePower(u32 battlePower);
     void setGroupNo(u32 groupNo);
     void setTrait(u32 trait);
+    u16* getTraitName();
     void setBossFlag(bool enable);
+    void setFavoriteFlag(bool enable);
+    void setReleaseFlag(bool enable);
     void setPrice(u32 price);
 };
 static_assert(sizeof(CPiiPersonalData) == 0x80);

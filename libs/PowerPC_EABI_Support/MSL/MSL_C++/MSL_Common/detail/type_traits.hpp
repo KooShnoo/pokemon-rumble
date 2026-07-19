@@ -694,6 +694,7 @@ struct is_fundamental
 	: public integral_constant<bool, is_arithmetic<T>::value || is_void<T>::value>
 {};
 
+namespace Metrowerks {
 // is_scalar
 
 template <class T>
@@ -704,6 +705,7 @@ struct is_scalar
 	                                 is_enum<T>::value           >
 	                                 
 {};
+}
 
 // is_object
 
@@ -803,17 +805,19 @@ template <class T> struct remove_reference<T&> {typedef T type;};
 template <class T> struct remove_reference<T&&> {typedef T type;};
 #endif
 
-// add_reference
+namespace Metrowerks {
+	// add_reference
 
-template <class T> struct add_reference     {typedef T& type;};
-template <class T> struct add_reference<T&> {typedef T& type;};
-#ifdef _MSL_MOVE
-template <class T> struct add_reference<T&&> {typedef T&& type;};
-#endif
-template <>        struct add_reference<void>                {typedef void type;};
-template <>        struct add_reference<const void>          {typedef void type;};
-template <>        struct add_reference<volatile void>       {typedef void type;};
-template <>        struct add_reference<const volatile void> {typedef void type;};
+	template <class T> struct add_reference     {typedef T& type;};
+	template <class T> struct add_reference<T&> {typedef T& type;};
+	#ifdef _MSL_MOVE
+	template <class T> struct add_reference<T&&> {typedef T&& type;};
+	#endif
+	template <>        struct add_reference<void>                {typedef void type;};
+	template <>        struct add_reference<const void>          {typedef void type;};
+	template <>        struct add_reference<volatile void>       {typedef void type;};
+	template <>        struct add_reference<const volatile void> {typedef void type;};
+} // Metrowerks
 
 // remove_extent
 

@@ -20,6 +20,9 @@ extern "C" {
 #define FP_NORMAL 4
 #define FP_SUBNORMAL 5
 
+#define M_PI 3.141592653589793f
+#define M_SQRT3 1.73205f
+
 int __signbitf(float);
 int __fpclassifyf(float);
 int __signbitd(double);
